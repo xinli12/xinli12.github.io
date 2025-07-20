@@ -1,0 +1,232 @@
+<!-- Custom head content for elegant typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- GitHub-style emoji support -->
+<script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+
+<style>
+  /* Enhanced typography and base styles */
+  * {
+    font-variant-ligatures: common-ligatures;
+    text-rendering: optimizeLegibility;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-feature-settings: "liga", "kern", "calt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #FEFCFD;
+    line-height: 1.6;
+    color: #2D1B20;
+  }
+  
+  /* Elegant serif headings */
+  h1, h2, h3, h4, h5, h6, .site-title {
+    font-family: 'Crimson Pro', Georgia, serif !important;
+    color: #8B1538;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  
+  h1 {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  
+  h2 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  
+  h3, h4 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  
+  .site-title {
+    font-weight: 700 !important;
+    color: #8B1538 !important;
+    letter-spacing: -0.03em;
+  }
+  
+  /* Clean sans-serif body text */
+  p, li, span, div {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  
+  /* Refined lead text */
+  .lead {
+    font-family: 'Crimson Pro', Georgia, serif !important;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  
+  /* Code and monospace */
+  code, pre, .highlight {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', monospace !important;
+  }
+  
+  /* Refined link styling */
+  a {
+    color: #8B1538;
+    transition: all 0.2s ease;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  
+  a:hover {
+    color: #B91C4D;
+    text-decoration-thickness: 2px;
+  }
+  
+  /* Clean navigation */
+  .site-nav .page-link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  
+  /* Elegant form elements */
+  .btn, button, .elegant-button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    letter-spacing: 0.01em;
+  }
+  
+  /* Consistent elegant button styling */
+  .elegant-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #8B1538, #B91C4D);
+    color: white !important;
+    text-decoration: none;
+    border-radius: 2px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+  
+  .elegant-button:hover {
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3);
+  }
+  
+  /* GitHub-style emoji styling */
+  .emoji {
+    height: 1.2em;
+    width: 1.2em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.2em;
+    display: inline-block;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  
+  /* Enhanced readability */
+  blockquote {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  
+  /* Tag styling */
+  .tag {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #F8E8EC;
+    color: #8B1538;
+    border-radius: 2px;
+    text-transform: none;
+  }
+  
+  /* Smooth font scaling for different screen sizes */
+  @media (max-width: 768px) {
+    body {
+      font-size: 0.95rem;
+    }
+    
+    h1 {
+      font-size: 2rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+    
+    h3 {
+      font-size: 1.25rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    body {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    
+    h1 {
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+    }
+    
+    h2 {
+      font-size: 1.35rem;
+    }
+  }
+</style>
+
+<script>
+  // Initialize GitHub-style emojis when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    // Parse emojis with Twemoji (GitHub style)
+    twemoji.parse(document.body, {
+      folder: 'svg',
+      ext: '.svg',
+      base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/',
+      className: 'emoji',
+      attributes: function() {
+        return {
+          style: 'background: transparent !important; box-shadow: none !important; border: none !important;'
+        };
+      }
+    });
+  });
+  
+  // Re-parse emojis for dynamically added content
+  function parseEmojis(element) {
+    if (typeof twemoji !== 'undefined') {
+      twemoji.parse(element || document.body, {
+        folder: 'svg',
+        ext: '.svg',
+        base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/',
+        className: 'emoji',
+        attributes: function() {
+          return {
+            style: 'background: transparent !important; box-shadow: none !important; border: none !important;'
+          };
+        }
+      });
+    }
+  }
+  
+  // Make parseEmojis available globally
+  window.parseEmojis = parseEmojis;
+</script> 

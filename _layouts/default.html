@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+{%- include custom-head.html -%}
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO and meta tags -->
+  <title>{% if page.title %}{{ page.title | escape }} | {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title | escape }} | {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}">
+  <meta property="og:description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:url" content="{{ page.url | absolute_url }}">
+  <meta property="twitter:title" content="{% if page.title %}{{ page.title | escape }} | {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}">
+  <meta property="twitter:description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+
+  <!-- Canonical link -->
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+  
+  <!-- Feed -->
+  {%- feed_meta -%}
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | relative_url }}">
+  
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+</head>
+
+<body class="{% if page.layout %}layout-{{ page.layout }}{% endif %}{% if page.class %} {{ page.class }}{% endif %}">
+
+  <!-- Skip to main content for accessibility -->
+  <a class="skip-link" href="#main-content" style="position: absolute; top: -40px; left: 0; background: #8B1538; color: white; padding: 8px; text-decoration: none; z-index: 1000; transition: top 0.3s ease;" 
+     onfocus="this.style.top='0'" onblur="this.style.top='-40px'">
+    Skip to main content
+  </a>
+
+  <!-- Header -->
+  <header class="site-header" role="banner" style="position: sticky; top: 0; z-index: 100; background: rgba(254, 252, 253, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #E8D4D8; box-shadow: 0 1px 3px rgba(139, 21, 56, 0.1);">
+    <div class="wrapper" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem;">
+      
+      <!-- Logo/Title -->
+      <div class="site-brand">
+        <a class="site-title" href="{{ "/" | relative_url }}" style="font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.5rem; color: #8B1538; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+          {{ site.title }}
+        </a>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="site-nav" role="navigation" aria-label="Main navigation">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" style="display: none;">
+        <label for="nav-trigger" class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+
+        <div class="trigger" style="display: flex; gap: 1.5rem; align-items: center;">
+          <!-- Home link -->
+          <a class="page-link" href="{{ "/" | relative_url }}" 
+             style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.2s ease;"
+             {% if page.url == "/" %}aria-current="page"{% endif %}>
+            Home
+          </a>
+          
+          {%- if site.header_pages -%}
+            {%- for path in site.header_pages -%}
+              {%- assign my_page = site.pages | where: "path", path | first -%}
+              {%- if my_page.title -%}
+              <a class="page-link" href="{{ my_page.url | relative_url }}" 
+                 style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.2s ease;"
+                 {% if page.url == my_page.url %}aria-current="page"{% endif %}>
+                {{ my_page.title }}
+              </a>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- assign sorted_pages = site.pages | sort: 'order' -%}
+            {%- for my_page in sorted_pages -%}
+              {%- if my_page.title and my_page.url != "/" -%}
+              <a class="page-link" href="{{ my_page.url | relative_url }}" 
+                 style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.2s ease;"
+                 {% if page.url == my_page.url %}aria-current="page"{% endif %}>
+                {{ my_page.title }}
+              </a>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="page-content" aria-label="Content" id="main-content" style="min-height: calc(100vh - 200px);">
+    <div class="wrapper" style="max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem;">
+      {{ content }}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  {%- include footer.html -%}
+
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const navTrigger = document.getElementById('nav-trigger');
+      const menuIcon = document.querySelector('.menu-icon');
+      const trigger = document.querySelector('.trigger');
+      
+      if (navTrigger && menuIcon && trigger) {
+        navTrigger.addEventListener('change', function() {
+          if (this.checked) {
+            // Mobile menu open
+            trigger.classList.add('mobile-menu-open');
+          } else {
+            // Mobile menu closed
+            trigger.classList.remove('mobile-menu-open');
+          }
+        });
+        
+        // Close mobile menu when clicking on links
+        const navLinks = trigger.querySelectorAll('a');
+        navLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            navTrigger.checked = false;
+            trigger.classList.remove('mobile-menu-open');
+          });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.site-nav') && navTrigger.checked) {
+            navTrigger.checked = false;
+            trigger.classList.remove('mobile-menu-open');
+          }
+        });
+      }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add active state to current page in navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll('.page-link');
+      
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath || 
+            (currentPath === '/' && link.getAttribute('href') === '/')) {
+          link.style.color = '#8B1538';
+          link.style.fontWeight = '600';
+        }
+        
+        // Hover effects
+        link.addEventListener('mouseenter', function() {
+          this.style.color = '#8B1538';
+          this.style.transform = 'translateY(-1px)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+          if (!this.hasAttribute('aria-current')) {
+            this.style.color = '#5A4A4E';
+          }
+          this.style.transform = 'translateY(0)';
+        });
+      });
+      
+      // Parse emojis for any content that might be loaded dynamically
+      setTimeout(function() {
+        if (typeof parseEmojis === 'function') {
+          parseEmojis();
+        }
+      }, 200);
+    });
+  </script>
+
+  <!-- Responsive styles -->
+  <style>
+    /* Base navigation styles */
+    .site-nav {
+      position: relative;
+    }
+    
+    .nav-trigger {
+      display: none !important;
+    }
+    
+    .menu-icon {
+      display: none;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .menu-icon span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #8B1538;
+      margin: 3px 0;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+    
+    .trigger {
+      transition: all 0.3s ease;
+    }
+    
+    /* Hamburger animation */
+    .nav-trigger:checked + .menu-icon span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .nav-trigger:checked + .menu-icon span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .nav-trigger:checked + .menu-icon span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
+    /* Mobile menu styles */
+    .trigger.mobile-menu-open {
+      display: flex !important;
+      position: absolute !important;
+      top: 100% !important;
+      right: 0 !important;
+      background: rgba(254, 252, 253, 0.98) !important;
+      padding: 1rem !important;
+      border-radius: 4px !important;
+      box-shadow: 0 4px 12px rgba(139, 21, 56, 0.2) !important;
+      backdrop-filter: blur(10px) !important;
+      border: 1px solid #E8D4D8 !important;
+      min-width: 200px !important;
+      z-index: 1000 !important;
+    }
+    
+    @media (max-width: 768px) {
+      .site-header .wrapper {
+        padding: 0.5rem 1rem;
+      }
+      
+      .menu-icon {
+        display: flex !important;
+      }
+      
+      .trigger {
+        display: none !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+      }
+      
+      .nav-trigger:checked ~ .trigger,
+      .trigger.mobile-menu-open {
+        display: flex !important;
+      }
+      
+      .page-content .wrapper {
+        padding: 1.5rem 1rem;
+      }
+      
+      .site-title {
+        font-size: 1.25rem !important;
+      }
+      
+      /* Ensure mobile menu appears above other content */
+      .trigger.mobile-menu-open {
+        animation: fadeInDown 0.3s ease-out;
+      }
+      
+      /* Hide desktop navigation items in mobile */
+      .trigger:not(.mobile-menu-open) {
+        visibility: hidden;
+      }
+      
+      .trigger.mobile-menu-open {
+        visibility: visible;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .site-header .wrapper {
+        padding: 0.5rem 0.75rem;
+      }
+      
+      .page-content .wrapper {
+        padding: 1rem 0.75rem;
+      }
+      
+      .trigger.mobile-menu-open {
+        right: 0.75rem !important;
+        left: 0.75rem !important;
+        min-width: auto !important;
+      }
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+</body>
+</html> 

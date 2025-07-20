@@ -1,0 +1,267 @@
+---
+layout: default
+---
+
+<article class="page" itemscope itemtype="http://schema.org/WebPage">
+  
+  <!-- Page Content -->
+  <div class="page-content" itemprop="text">
+    
+    <!-- Table of Contents (if enabled) -->
+    {% if page.toc %}
+    <div class="table-of-contents" style="background: #FDF5F7; border-left: 3px solid #8B1538; padding: 1.5rem; margin-bottom: 2rem; border-radius: 0 4px 4px 0;">
+      <h3 style="margin: 0 0 1rem 0; color: #8B1538; font-size: 1.1rem; font-weight: 600;">📋 Table of Contents</h3>
+      <div id="toc" style="font-size: 0.9rem; line-height: 1.6;"></div>
+    </div>
+    {% endif %}
+    
+    <!-- Main Content -->
+    <div class="content-wrapper" style="line-height: 1.7; color: #2D1B20;">
+      {{ content }}
+    </div>
+    
+    <!-- Page Tags (if available) -->
+    {% if page.tags and page.tags.size > 0 %}
+    <div class="page-tags" style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #E8D4D8;">
+      <h3 style="margin: 0 0 1rem 0; color: #8B1538; font-size: 1rem; font-weight: 600;">🏷️ Tags</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        {% for tag in page.tags %}
+        <span class="tag" style="display: inline-block; padding: 0.25rem 0.75rem; background: #F8E8EC; color: #8B1538; border-radius: 2px; font-size: 0.8rem; font-weight: 500;">
+          #{{ tag }}
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    
+    <!-- Related Pages (if configured) -->
+    {% if page.related and page.related.size > 0 %}
+    <div class="related-pages" style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #E8D4D8;">
+      <h3 style="margin: 0 0 1.5rem 0; color: #8B1538; font-size: 1.2rem; font-weight: 600;">🔗 Related Pages</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+        {% for related_page_url in page.related %}
+          {% assign related_page = site.pages | where: "url", related_page_url | first %}
+          {% if related_page %}
+          <div style="padding: 1.25rem; border-left: 3px solid #B91C4D; background: #FDF5F7; transition: all 0.2s ease;">
+            <h4 style="margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600;">
+              <a href="{{ related_page.url | relative_url }}" style="color: #8B1538; text-decoration: none;">
+                {{ related_page.title }}
+              </a>
+            </h4>
+            {% if related_page.description %}
+            <p style="margin: 0; color: #5A4A4E; font-size: 0.9rem; line-height: 1.5;">
+              {{ related_page.description | truncate: 120 }}
+            </p>
+            {% endif %}
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    
+  </div>
+
+  <!-- Page Footer Actions -->
+  <footer class="page-footer" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #E8D4D8; text-align: center;">
+    
+    <!-- Social Sharing (if enabled) -->
+    {% if page.share != false and site.features.sharing %}
+    <div class="page-sharing" style="margin-bottom: 1.5rem;">
+      <h4 style="margin: 0 0 1rem 0; color: #8B1538; font-size: 1rem; font-weight: 600;">Share this page</h4>
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}" 
+           target="_blank" rel="noopener" 
+           style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #1DA1F2; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85rem; transition: all 0.2s ease;">
+          🐦 Twitter
+        </a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}" 
+           target="_blank" rel="noopener"
+           style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #0077B5; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85rem; transition: all 0.2s ease;">
+          💼 LinkedIn
+        </a>
+      </div>
+    </div>
+    {% endif %}
+    
+    <!-- Back Navigation (skip for homepage) -->
+    {% unless page.url == "/" %}
+    <div class="page-navigation" style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+      <a href="/" class="elegant-button" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #8B1538, #B91C4D); color: white; text-decoration: none; border-radius: 2px; font-weight: 500; font-size: 0.9rem; transition: all 0.3s ease;">
+        ← Back to Home
+      </a>
+      {% if page.parent %}
+      <a href="{{ page.parent | relative_url }}" class="elegant-button" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: transparent; color: #8B1538; text-decoration: none; border: 1px solid #8B1538; border-radius: 2px; font-weight: 500; font-size: 0.9rem; transition: all 0.3s ease;">
+        ↑ Back to {{ page.parent_title | default: "Parent" }}
+      </a>
+      {% endif %}
+    </div>
+    {% endunless %}
+    
+    <!-- Last Updated -->
+    {% if page.last_modified_at or page.date %}
+    <div style="margin-top: 1.5rem; color: #8B7B7E; font-size: 0.8rem;">
+      <p style="margin: 0;">
+        Last updated: 
+        <time datetime="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
+          {{ page.last_modified_at | default: page.date | date: "%B %-d, %Y" }}
+        </time>
+      </p>
+    </div>
+    {% endif %}
+    
+  </footer>
+
+</article>
+
+<!-- Table of Contents Generator Script -->
+{% if page.toc %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tocContainer = document.getElementById('toc');
+  const headings = document.querySelectorAll('.content-wrapper h2, .content-wrapper h3, .content-wrapper h4');
+  
+  if (headings.length > 0 && tocContainer) {
+    let tocHTML = '<ul style="list-style: none; padding: 0; margin: 0;">';
+    
+    headings.forEach((heading, index) => {
+      const id = heading.id || `heading-${index}`;
+      heading.id = id;
+      
+      const level = parseInt(heading.tagName.substring(1));
+      const indent = (level - 2) * 1.2; // Indent sub-headings
+      
+      tocHTML += `
+        <li style="margin-bottom: 0.5rem; padding-left: ${indent}rem;">
+          <a href="#${id}" style="color: #8B1538; text-decoration: none; font-size: 0.9rem; line-height: 1.4; display: block; padding: 0.25rem 0; transition: all 0.2s ease;">
+            ${heading.textContent}
+          </a>
+        </li>
+      `;
+    });
+    
+    tocHTML += '</ul>';
+    tocContainer.innerHTML = tocHTML;
+    
+    // Add smooth scrolling and active states
+    tocContainer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+      
+      link.addEventListener('mouseenter', function() {
+        this.style.color = '#B91C4D';
+        this.style.paddingLeft = '0.5rem';
+      });
+      
+      link.addEventListener('mouseleave', function() {
+        this.style.color = '#8B1538';
+        this.style.paddingLeft = '0';
+      });
+    });
+  } else if (tocContainer) {
+    tocContainer.parentElement.style.display = 'none';
+  }
+});
+</script>
+{% endif %}
+
+<style>
+/* Page-specific styles */
+.page-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(139, 21, 56, 0.1);
+  margin: 1.5rem 0;
+}
+
+.page-content img.emoji {
+  max-width: none !important;
+  height: 1.2em !important;
+  width: 1.2em !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 0.05em 0 0.1em !important;
+  vertical-align: -0.2em !important;
+  display: inline-block !important;
+  background: transparent !important;
+}
+
+.page-content blockquote {
+  border-left: 3px solid #8B1538;
+  background: #FDF5F7;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  border-radius: 0 4px 4px 0;
+}
+
+.page-content pre {
+  background: #FDF5F7;
+  border: 1px solid #E8D4D8;
+  border-radius: 4px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.page-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 4px rgba(139, 21, 56, 0.1);
+}
+
+.page-content table th,
+.page-content table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #E8D4D8;
+}
+
+.page-content table th {
+  background: #F8E8EC;
+  color: #8B1538;
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .page-header {
+    padding: 1rem 0 !important;
+  }
+  
+  .page-title {
+    font-size: 2rem !important;
+  }
+  
+  .page-description {
+    font-size: 1rem !important;
+  }
+  
+  .page-navigation {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .table-of-contents {
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.75rem !important;
+  }
+  
+  .elegant-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style> 

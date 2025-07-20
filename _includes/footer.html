@@ -1,0 +1,53 @@
+<footer class="site-footer h-card">
+  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{{ site.title | escape }}</li>
+          <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          {%- if site.github_username -%}
+          <li><a href="https://github.com/{{ site.github_username | cgi_escape | escape }}"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#github' | relative_url }}"></use></svg> <span class="username">{{ site.github_username | escape }}</span></a></li>
+          {%- endif -%}
+          {%- if site.twitter_username -%}
+          <li><a href="https://www.twitter.com/{{ site.twitter_username | cgi_escape | escape }}"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#twitter' | relative_url }}"></use></svg> <span class="username">{{ site.twitter_username | escape }}</span></a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>{{ site.description | escape }}</p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E8D4D8; color: #8B7B7E; font-size: 0.875rem;">
+      <p style="margin: 0;">
+        © {{ site.time | date: '%Y' }} Xin Li. Built with ❤️ using Jekyll and deployed on GitHub Pages.
+      </p>
+      <p style="margin: 0.5rem 0 0 0;">
+        🚂 愿此行，终抵群星 ✨
+      </p>
+    </div>
+
+  </div>
+
+</footer>
+
+<script>
+  // Ensure emojis are parsed after page load
+  document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure all content is loaded
+    setTimeout(function() {
+      if (typeof parseEmojis === 'function') {
+        parseEmojis();
+      }
+    }, 100);
+  });
+</script> 

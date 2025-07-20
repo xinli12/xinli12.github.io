@@ -1,0 +1,163 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you:
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: "Xin Li"
+email: xinli020125@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  Physics graduate exploring statistical modeling, astrophysics, and deep learning.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://xinli12.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: 
+github_username: xinli12
+
+# Author information
+author: "Xin Li"
+author_bio: "Physics Graduate | ML Enthusiast"
+author_location: "Research & Development"
+author_avatar: "/assets/images/avatar.jpg"
+author_links:
+  - label: "Email"
+    icon: "fas fa-fw fa-envelope-square"
+    url: "mailto:xinli020125@gmail.com"
+  - label: "GitHub"
+    icon: "fab fa-fw fa-github"
+    url: "https://github.com/xinli12"
+  - label: "LinkedIn"
+    icon: "fab fa-fw fa-linkedin"
+    url: "https://linkedin.com/in/xinli"
+
+# Navigation pages
+header_pages:
+  - blog.markdown
+  - projects.md
+  - research.md
+  - about.md
+
+# Typography & Design
+# Clean, modern sans-serif typography
+minima:
+  skin: auto
+  date_format: "%B %-d, %Y"
+  
+# Modern sans-serif Google Fonts for clean, elegant design
+google_fonts:
+  - "Inter:wght@300;400;500;600;700;800;900"
+  - "Manrope:wght@300;400;500;600;700;800"
+  - "JetBrains+Mono:wght@300;400;500;600;700;800"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-paginate
+
+# Pagination settings
+paginate: 5
+paginate_path: "/blog/page:num/"
+
+# SEO and social settings
+logo: "/assets/images/logo.png"
+social:
+  name: Xin Li
+  links:
+    - https://github.com/xinli12
+
+# Feed settings
+feed:
+  excerpt_only: true
+
+# Collection settings
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+    sort_by: date
+  research:
+    output: true
+    permalink: /research/:name/
+    sort_by: date
+
+# Defaults for different content types
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      show_date: true
+      author: "Xin Li"
+      show_excerpts: true
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "page"
+      show_date: false
+  - scope:
+      path: ""
+      type: "research"
+    values:
+      layout: "page"
+      show_date: false
+
+# Custom variables
+tagline: "Physics, Machine Learning & Research"
+show_excerpts: true
+excerpt_separator: "<!--more-->"
+
+# Features
+features:
+  math: true
+  search: true
+  reading_time: true
+
+# Color scheme
+colors:
+  primary: "#2563eb"
+  secondary: "#64748b"
+  accent: "#0ea5e9"
+  background: "#fafbfc"
+  surface: "#ffffff"
+  muted: "#f8fafc"
+  border: "#e2e8f0"
+  text_primary: "#1a202c"
+  text_secondary: "#4a5568"
+  text_muted: "#718096"
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - LICENSE.md
+  - "*.gem"
+  - "*.gemspec"

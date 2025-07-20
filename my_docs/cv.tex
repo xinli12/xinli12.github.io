@@ -1,0 +1,303 @@
+%-------------------------
+% Resume in Latex
+% Author : Gennadii Chursov
+% Based off of: https://github.com/sb2nov/resume and https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs
+% License : MIT
+%------------------------
+
+\documentclass[a4paper,11pt]{article}
+
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Libertinus Serif}[Numbers=OldStyle, Ligatures=TeX]
+\setsansfont{Fira Sans}[Scale=MatchLowercase]
+\setmonofont{Fira Code}[Scale=MatchLowercase, UprightFont=*-Regular, BoldFont=*-Bold]
+\setmathfont{Libertinus Math}
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.3in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+% \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+%   \textbf{\href{http://sourabhbajaj.com/}{\Large Sourabh Bajaj}} & Email : \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
+%   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
+% \end{tabular*}
+
+% \begin{center}
+    \textbf{\Huge \scshape Xin Li} \\ \vspace{1pt}
+    % \small \textit{Quantitative Researcher (Intern)} \\
+    \href{mailto:xinli020125@gmail.com}{\underline{xinli020125@gmail.com}} $|$ 
+    \href{https://github.com/xinli12}{\underline{github.com/xinli12}}
+% \end{center}
+
+%-----------SUMMARY-----------
+\section{Research Interests}
+\begin{itemize}[leftmargin=0.15in, label={}, itemsep=0pt, parsep=0pt]
+    \small{\item{Statistical Modelling \& Inference, Astrophysics, Deep Generative Modelling, Time Series Modelling/Forecasting}}
+\end{itemize}
+
+% \section{Research Interests}
+% \resumeItemListStart
+%   \resumeItem{\textbf{Deep Generative Models}: Designing and optimising generative models (e.g., VAEs, GANs) for data synthesis and simulation in scientific applications.}
+%   \resumeItem{\textbf{AI for Physical Sciences}: Applying machine learning to solve complex problems in physics, including PDE solving with physics-informed neural networks.}
+%   \resumeItem{\textbf{Time Series Analysis}: Developing robust forecasting models and uncertainty quantification for temporal data using statistical and deep learning methods.}
+%   \resumeItem{\textbf{Statistical Modelling and Inference}: Leveraging Bayesian and frequentist methods for parameter estimation and hypothesis testing in high-energy physics and cosmology.}
+%   \resumeItem{\textbf{Uncertainty Quantification}: Implementing advanced techniques (e.g., Monte Carlo, Gaussian Processes) to quantify uncertainties in scientific simulations and predictions.}
+% \resumeItemListEnd
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {University of Cambridge}{Cambridge, UK}
+    {MPhil in Data Intensive Science}{Oct 2024 -- Aug 2025}
+    \resumeItemListStart
+        \resumeItem{\textbf{Provisional Grade: } 78.8/100 (Distinction threshold: 75/100)}
+        \resumeItem{\textbf{Major Modules: } Statistical Methods (Frequentist Inference \& Bayesian Inference, stochastic sampling methods such as Markov Chain Monte Carlo, Gaussian Processes Regression, etc), Machine Learning \& Deep Learning, Research Computing and Software Development, High Performance Computing}
+        \resumeItem{\textbf{Minor Modules: }High Energy Physics \& Gravitational Waves data analysis with statistical methods and ML}
+        
+    \resumeItemListEnd
+
+  \resumeSubheading
+    {Beijing Normal University}{Beijing, China}
+    {BSc in Physics}{Sep 2020 -- Jul 2024}
+    \resumeItemListStart
+
+
+        \resumeItem{\textbf{Core Physics Modules: } General Physics, Computational Physics, Theoretical Mechanics, Electrodynamics, Quantum Mechanics, Thermodynamics and Statistical Physics, Solid State Physics, Physics Experiments}
+        \resumeItem{\textbf{Mathematics and Computational Modules: } Calculus, Linear Algebra, Mathematical Physics Methods (e.g., complex analysis and partial differential equations), Probability and Statistics; Discrete Mathematics, Data Structures, Data Mining, Deep Learning, Time Series Analysis}
+        \resumeItem{\textbf{Dissertation: }Designed and implemented various Physics-Informed Neural Networks (PINNs) to solve physics PDEs.}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+
+
+
+\section{Research \& Projects}
+
+
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Simulation-Based Inference for Stochastic Gravitational Wave Background}{Cambridge, UK}
+    {Dissertation Project}{Jan 2025 -- Jul 2025}
+    \resumeItemListStart
+        \resumeItem{Developed and evaluated a simulation-based inference (SBI) pipeline using Truncated Marginal Neural Ratio Estimation (TMNRE) to analyse the stochastic gravitational wave background (SGWB) in mock Laser Interferometer Space Antenna (LISA) data.}
+        \resumeItem{Implemented a power-law SGWB simulator/model, incorporating stationary Gaussian process signal and noise components.}
+        \resumeItem{Utilised a UNet-based architecture to compress high-dimensional LISA frequency-domain data into informative summary statistics for likelihood-to-evidence ratio estimation, and employed marginalisation and adaptive truncation strategies to efficiently handle high-dimensional parameter spaces.}
+        \resumeItem{Achieved statistical accuracy comparable to traditional Markov Chain Monte Carlo (MCMC) methods (using \texttt{emcee}), validated by consistently low statistical divergence metrics. Ensured calibration through extensive empirical coverage vs. nominal coverage tests.}
+    \resumeItemListEnd
+
+\resumeSubheading
+  {LoRA Fine-Tuned LLMs for Time Series Forecasting}{}
+  {Coursework - Deep Learning}{Mar 2025 -- Apr 2025}
+  \resumeItemListStart
+    \resumeItem{Fine-tuned large language models (LLMs) (Qwen2.5-0.5B-Instruct) for time series forecasting using Low-Rank Adaptation (LoRA), inspired by the LLMTime research framework by Gruver et al.}
+    \resumeItem{Managed the project within a strict computational budget (FLOPs), conducting detailed FLOPs analysis to inform training strategy and resource allocation.}
+    \resumeItem{Developed and optimised data preprocessing pipelines, carried out systematic hyperparameter tuning, and applied coverage metrics (empirical coverage and coverage interval) for uncertainty quantification.}
+    \resumeItem{Achieved a significant improvement in forecasting accuracy and uncertainty calibration, reducing mean absolute error (MAE) by approximately 80\% through rigorous model evaluation and optimisation.}
+  \resumeItemListEnd
+
+
+\resumeSubheading
+  {Gravitational Wave Data Analysis and Cosmological Parameter Estimation}{}
+  {Coursework -- Gravitational Waves}{May 2025 -- Jun 2025}
+  \resumeItemListStart
+    \resumeItem{Analysed gravitational wave data from the LIGO-Virgo network using matched filtering for signal detection and Bayesian inference for parameter estimation with the \texttt{bilby} and \texttt{dynesty} libraries.}
+    \resumeItem{Compared the two- and three-detector networks and the two methodologies for source localisation, quantified by the 90\% confidence region on the sky map.}
+    \resumeItem{Estimated the Hubble constant by combining the inferred luminosity distance posterior with the host galaxy's redshift.}
+  \resumeItemListEnd
+
+% \resumeSubheading
+%   {Gravitational Wave Data Analysis and Cosmological Parameter Estimation}{}
+%   {Coursework -- Gravitational Waves}{May 2025 -- Jun 2025}
+%   \resumeItemListStart
+%     \resumeItem{Analysed gravitational wave data from the LIGO-Virgo network using matched filtering for signal detection and a Bayesian inference model for parameter estimation with the \texttt{bilby} and \texttt{dynesty} libraries.}
+%     \resumeItem{Quantified the impact of network configuration and analysis methodology on source localisation, demonstrating that including the Virgo detector and employing Bayesian inference reduced the 90\% credible sky area from 14,494 deg² (2-detector, matched filter) to a final 2.7 deg².}
+%     \resumeItem{Leveraged the precise 3-detector Bayesian localisation to identify the probable host galaxy from a catalogue, enabling the use of the gravitational wave signal as a `standard siren'.}
+%     \resumeItem{Estimated the Hubble constant by combining the inferred luminosity distance posterior with the host galaxy's redshift.}
+%   \resumeItemListEnd
+
+
+\resumeSubheading
+    {Statistical Analysis of Higgs Boson Decay to Diphotons}{}
+    {Coursework - High Energy Physics}{Mar 2025 -- Apr 2025}
+    \resumeItemListStart
+      \resumeItem{Analysed \( 36.1 \, \text{fb}^{-1} \) of ATLAS Run 2 Open Data to measure the statistical significance of \( H \rightarrow \gamma \gamma \), applying selection criteria and fitting the diphoton invariant mass spectrum.}
+      \resumeItem{Modelled the signal using a mixture of Gaussian and Crystal Ball distributions and the background with a 4th-order Bernstein polynomial, performing an extended binned maximum likelihood fit to extract a signal strength with a significance of \( 2.45 \sigma \) using Wilks' theorem.}
+      \resumeItem{Produced profile likelihood scans and residual plots to validate fit quality (\( \chi^2 / \text{ndof} = 1.5 \)).}
+    \resumeItemListEnd
+
+
+  \resumeSubheading
+    {Event Classification for Hadronic \( Z^0 \) Decays}{}
+    {Coursework -- High Energy Physics}{Mar 2025 -- Apr 2025}
+    \resumeItemListStart
+        \resumeItem{Developed a transformer-based neural network to classify hadronic \( Z^0 \) boson decays into quark flavours (\( b \bar{b} \), \( c \bar{c} \), \( s \bar{s} \)) using simulated \( e^+ e^- \) collision data from the Future Circular Collider (FCC) with the IDEA detector.}
+        \resumeItem{Designed a multi-branch architecture integrating global event features (e.g., thrust, multiplicities) with variable-length particle and vertex sequences, employing self-attention and cross-attention for context-aware feature fusion.}
+        \resumeItem{Achieved a classification accuracy exceeding 95\% on test data with AUC scores > 0.99, demonstrating robust generalisation and strong discriminative performance.}
+    \resumeItemListEnd
+
+
+
+    
+% \resumeSubheading
+%   {Statistical Modelling of the Antikythera Mechanism's Calendar Ring}{}
+%   {Coursework}{Mar 2025 -- Apr 2025}
+%   \resumeItemListStart
+%     \resumeItem{Analysed positional data from the fragmented Antikythera calendar ring to statistically infer its original number of holes, developing hierarchical models to account for fragment displacement and rotation.}
+%     \resumeItem{Implemented both frequentist (Maximum Likelihood with bootstrap) and Bayesian (Hamiltonian Monte Carlo via \texttt{numpyro} and \texttt{JAX}) frameworks for parameter inference and uncertainty quantification.}
+%     \resumeItem{Conducted rigorous model selection using Likelihood-Ratio Tests and the Savage-Dickey density ratio, finding overwhelming evidence for a model with anisotropic radial and tangential errors.}
+%   \resumeItemListEnd
+% \resumeSubheading
+%     {Group-Equivariant Convolutional Neural Networks for Rotated MNIST}{}
+%     {Coursework -- High Energy Physics}{Mar 2025 -- Apr 2025}
+% \resumeItemListStart
+%       \resumeItem{Designed and implemented a custom Keras layer for rotation-equivariant convolutions under the \( C_4 \) group, ensuring equivariance to image rotations.}
+%       \resumeItem{Developed a group convolution framework, theoretically validated through analytical proofs, incorporating GMaxPooling for rotation-invariant feature extraction.}
+%       \resumeItem{Compared a rotation-equivariant CNN (G-CNN) against a baseline fully connected network (FCN), achieving higher validation accuracy and lower loss on rotated MNIST digits, with training curves visualised to confirm faster convergence.}
+%     \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+% -----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Quantitative Trading Intern}{Beijing, China}
+    {Alterithm Data}{Jul 2024 -- Oct 2024}
+    \resumeItemListStart
+        \resumeItem{Designed and implemented data processing pipelines for real-time quote and trade data.}
+        \resumeItem{Developed and backtested timing-based trading strategies, leveraging ensemble machine learning models (XGBoost, CatBoost, LightGBM) to predict market movements.}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+
+
+
+
+% -----------Multiple Positions Heading-----------
+%    \resumeSubSubheading
+%     {Software Engineer I}{Oct 2014 - Sep 2016}
+%     \resumeItemListStart
+%        \resumeItem{Apache Beam}
+%          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
+%     \resumeItemListEnd
+%    \resumeSubHeadingListEnd
+%-------------------------------------------
+
+
+%   \resumeSubHeadingListEnd
+
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+
+\begin{itemize}[leftmargin=0.15in, label={}, itemsep=0pt, parsep=0pt]
+    \small{\item{\textbf{Programming Language:} Python, C/C++, MATLAB}}
+\end{itemize}
+
+% %-----------Certifications-----------
+% \newpage
+% \section{Certifications}
+%   \begin{itemize}[leftmargin=0.15in, label={}]
+%     \small{\item{
+%      \textbf{Cloud Digital Leader - Google Cloud} \\
+%      \textit{Issued Sep 2022 - Expires Sep 2025} \\
+%     }}
+%  \end{itemize}
+
+
+%-------------------------------------------
+\end{document}
