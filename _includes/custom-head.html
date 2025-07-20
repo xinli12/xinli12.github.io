@@ -1,7 +1,77 @@
 <!-- Custom head content for elegant typography -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- MathJax Configuration for LaTeX support -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    packages: {'[+]': ['ams', 'newcommand', 'bbox', 'color', 'cancel']},
+    tags: 'ams',
+    macros: {
+      RR: "{\\mathbb{R}}",
+      CC: "{\\mathbb{C}}",
+      ZZ: "{\\mathbb{Z}}",
+      NN: "{\\mathbb{N}}",
+      QQ: "{\\mathbb{Q}}",
+      E: "{\\mathbb{E}}",
+      Var: "{\\text{Var}}",
+      Cov: "{\\text{Cov}}",
+      given: "{\\,|\\,}"
+    }
+  },
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  svg: {
+    fontCache: 'global',
+    displayAlign: 'center',
+    scale: 1.05,
+    linebreaks: { automatic: true }
+  },
+  chtml: {
+    scale: 1.05,
+    displayAlign: 'center'
+  },
+  startup: {
+    ready: () => {
+      MathJax.startup.defaultReady();
+      // Ensure math respects theme colors
+      const style = document.createElement('style');
+      style.textContent = `
+        mjx-container[jax="SVG"] svg {
+          color: #2D1B20;
+        }
+        mjx-container[jax="CHTML"] mjx-math {
+          color: #2D1B20;
+        }
+        .MathJax {
+          color: #2D1B20 !important;
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // Re-render math after content is visible
+      setTimeout(() => {
+        MathJax.typesetPromise();
+      }, 100);
+    }
+  }
+};
+</script>
+<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<!-- Prism.js for enhanced syntax highlighting -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 <!-- GitHub-style emoji support -->
 <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
@@ -11,6 +81,36 @@
   * {
     font-variant-ligatures: common-ligatures;
     text-rendering: optimizeLegibility;
+  }
+  
+  /* Global emoji size control - IMPORTANT: This must come first! */
+  img.emoji,
+  .emoji,
+  img[src*="twemoji"],
+  img[alt*="😀"], img[alt*="😃"], img[alt*="😄"], img[alt*="😁"], img[alt*="😆"], img[alt*="😅"], img[alt*="🤣"], img[alt*="😂"], img[alt*="🙂"], img[alt*="🙃"], img[alt*="😉"], img[alt*="😊"], img[alt*="😇"], img[alt*="🥰"], img[alt*="😍"], img[alt*="🤩"], img[alt*="😘"], img[alt*="😗"], img[alt*="☺"], img[alt*="😚"], img[alt*="😙"], img[alt*="🥲"], img[alt*="😋"], img[alt*="😛"], img[alt*="😜"], img[alt*="🤪"], img[alt*="😝"], img[alt*="🤑"], img[alt*="🤗"], img[alt*="🤭"], img[alt*="🤫"], img[alt*="🤔"], img[alt*="🤐"], img[alt*="🤨"], img[alt*="😐"], img[alt*="😑"], img[alt*="😶"], img[alt*="😏"], img[alt*="😒"], img[alt*="🙄"], img[alt*="😬"], img[alt*="🤥"], img[alt*="😔"], img[alt*="😪"], img[alt*="🤤"], img[alt*="😴"], img[alt*="😷"], img[alt*="🤒"], img[alt*="🤕"], img[alt*="🤢"], img[alt*="🤮"], img[alt*="🤧"], img[alt*="🥵"], img[alt*="🥶"], img[alt*="🥴"], img[alt*="😵"], img[alt*="🤯"], img[alt*="🤠"], img[alt*="🥳"], img[alt*="🥸"], img[alt*="😎"], img[alt*="🤓"], img[alt*="🧐"], img[alt*="😕"], img[alt*="😟"], img[alt*="🙁"], img[alt*="☹"], img[alt*="😮"], img[alt*="😯"], img[alt*="😲"], img[alt*="😳"], img[alt*="🥺"], img[alt*="😦"], img[alt*="😧"], img[alt*="😨"], img[alt*="😰"], img[alt*="😥"], img[alt*="😢"], img[alt*="😭"], img[alt*="😱"], img[alt*="😖"], img[alt*="😣"], img[alt*="😞"], img[alt*="😓"], img[alt*="😩"], img[alt*="😫"], img[alt*="🥱"], img[alt*="😤"], img[alt*="😡"], img[alt*="😠"], img[alt*="🤬"], img[alt*="😈"], img[alt*="👿"], img[alt*="💀"], img[alt*="☠"], img[alt*="💩"], img[alt*="🤡"], img[alt*="👹"], img[alt*="👺"], img[alt*="👻"], img[alt*="👽"], img[alt*="👾"], img[alt*="🤖"], img[alt*="🎃"], img[alt*="😺"], img[alt*="😸"], img[alt*="😹"], img[alt*="😻"], img[alt*="😼"], img[alt*="😽"], img[alt*="🙀"], img[alt*="😿"], img[alt*="😾"],
+  img[alt*="👋"], img[alt*="🤚"], img[alt*="🖐"], img[alt*="✋"], img[alt*="🖖"], img[alt*="👌"], img[alt*="🤌"], img[alt*="🤏"], img[alt*="✌"], img[alt*="🤞"], img[alt*="🤟"], img[alt*="🤘"], img[alt*="🤙"], img[alt*="👈"], img[alt*="👉"], img[alt*="👆"], img[alt*="🖕"], img[alt*="👇"], img[alt*="☝"], img[alt*="👍"], img[alt*="👎"], img[alt*="👊"], img[alt*="✊"], img[alt*="🤛"], img[alt*="🤜"], img[alt*="👏"], img[alt*="🙌"], img[alt*="👐"], img[alt*="🤲"], img[alt*="🤝"], img[alt*="🙏"],
+  img[alt*="❤"], img[alt*="🧡"], img[alt*="💛"], img[alt*="💚"], img[alt*="💙"], img[alt*="💜"], img[alt*="🖤"], img[alt*="🤍"], img[alt*="🤎"], img[alt*="💔"], img[alt*="❣"], img[alt*="💕"], img[alt*="💞"], img[alt*="💓"], img[alt*="💗"], img[alt*="💖"], img[alt*="💘"], img[alt*="💝"], img[alt*="💟"],
+  img[alt*="✨"], img[alt*="💫"], img[alt*="⭐"], img[alt*="🌟"], img[alt*="💥"], img[alt*="💦"], img[alt*="💨"], img[alt*="🔥"], img[alt*="❄"], img[alt*="☀"], img[alt*="🌤"], img[alt*="⛅"], img[alt*="🌦"], img[alt*="🌧"], img[alt*="⛈"], img[alt*="🌩"], img[alt*="🌨"], img[alt*="☁"], img[alt*="🌪"], img[alt*="🌬"], img[alt*="🌈"], img[alt*="☂"], img[alt*="☔"], img[alt*="⛱"], img[alt*="⚡"], img[alt*="❄"], img[alt*="☃"], img[alt*="⛄"], img[alt*="🔴"], img[alt*="🟠"], img[alt*="🟡"], img[alt*="🟢"], img[alt*="🔵"], img[alt*="🟣"], img[alt*="🟤"], img[alt*="⚫"], img[alt*="⚪"], img[alt*="🟥"], img[alt*="🟧"], img[alt*="🟨"], img[alt*="🟩"], img[alt*="🟦"], img[alt*="🟪"], img[alt*="🟫"], img[alt*="⬛"], img[alt*="⬜"], img[alt*="◼"], img[alt*="◻"], img[alt*="◾"], img[alt*="◽"], img[alt*="▪"], img[alt*="▫"],
+  img[alt*="🎯"], img[alt*="🎮"], img[alt*="🎲"], img[alt*="🎸"], img[alt*="🎺"], img[alt*="🎻"], img[alt*="🥁"], img[alt*="🎹"], img[alt*="🎤"], img[alt*="🎧"], img[alt*="📻"], img[alt*="🎬"], img[alt*="🎭"], img[alt*="🎨"], img[alt*="🎪"], img[alt*="🎉"], img[alt*="🎊"], img[alt*="🎁"], img[alt*="🎀"], img[alt*="🎈"], img[alt*="🎂"], img[alt*="🍰"], img[alt*="🧁"], img[alt*="🥧"], img[alt*="🍫"], img[alt*="🍬"], img[alt*="🍭"], img[alt*="🍮"], img[alt*="🍯"],
+  img[alt*="🌍"], img[alt*="🌎"], img[alt*="🌏"], img[alt*="🌐"], img[alt*="🗺"], img[alt*="🗾"], img[alt*="🧭"], img[alt*="🏔"], img[alt*="⛰"], img[alt*="🌋"], img[alt*="🗻"], img[alt*="🏕"], img[alt*="🏖"], img[alt*="🏜"], img[alt*="🏝"], img[alt*="🏞"], img[alt*="🏟"], img[alt*="🏛"], img[alt*="🏗"], img[alt*="🧱"], img[alt*="🪨"], img[alt*="🪵"], img[alt*="🛖"], img[alt*="🏘"], img[alt*="🏚"], img[alt*="🏠"], img[alt*="🏡"], img[alt*="🏢"], img[alt*="🏣"], img[alt*="🏤"], img[alt*="🏥"], img[alt*="🏦"], img[alt*="🏨"], img[alt*="🏩"], img[alt*="🏪"], img[alt*="🏫"], img[alt*="🏬"], img[alt*="🏭"], img[alt*="🏯"], img[alt*="🏰"], img[alt*="💒"], img[alt*="🗼"], img[alt*="🗽"], img[alt*="⛪"], img[alt*="🕌"], img[alt*="🛕"], img[alt*="🕍"], img[alt*="⛩"], img[alt*="🕋"], img[alt*="⛲"], img[alt*="⛺"], img[alt*="🌁"], img[alt*="🌃"], img[alt*="🏙"], img[alt*="🌄"], img[alt*="🌅"], img[alt*="🌆"], img[alt*="🌇"], img[alt*="🌉"], img[alt*="♨"], img[alt*="🎠"], img[alt*="🎡"], img[alt*="🎢"], img[alt*="💈"], img[alt*="🎪"],
+  img[alt*="🚗"], img[alt*="🚕"], img[alt*="🚙"], img[alt*="🚌"], img[alt*="🚎"], img[alt*="🏎"], img[alt*="🚓"], img[alt*="🚑"], img[alt*="🚒"], img[alt*="🚐"], img[alt*="🚚"], img[alt*="🚛"], img[alt*="🚜"], img[alt*="🦯"], img[alt*="🦽"], img[alt*="🦼"], img[alt*="🛴"], img[alt*="🚲"], img[alt*="🛵"], img[alt*="🏍"], img[alt*="🛺"], img[alt*="🚨"], img[alt*="🚔"], img[alt*="🚍"], img[alt*="🚘"], img[alt*="🚖"], img[alt*="🚡"], img[alt*="🚠"], img[alt*="🚟"], img[alt*="🚃"], img[alt*="🚋"], img[alt*="🚞"], img[alt*="🚝"], img[alt*="🚄"], img[alt*="🚅"], img[alt*="🚈"], img[alt*="🚂"], img[alt*="🚆"], img[alt*="🚇"], img[alt*="🚊"], img[alt*="🚉"], img[alt*="✈"], img[alt*="🛫"], img[alt*="🛬"], img[alt*="🛩"], img[alt*="💺"], img[alt*="🛰"], img[alt*="🚀"], img[alt*="🛸"], img[alt*="🚁"], img[alt*="🛶"], img[alt*="⛵"], img[alt*="🚤"], img[alt*="🛥"], img[alt*="🛳"], img[alt*="⛴"], img[alt*="🚢"], img[alt*="⚓"], img[alt*="⛽"], img[alt*="🚧"], img[alt*="🚦"], img[alt*="🚥"], img[alt*="🚏"], img[alt*="🗺"], img[alt*="🗿"], img[alt*="🗽"], img[alt*="🗼"], img[alt*="🏰"], img[alt*="🏯"], img[alt*="🏟"], img[alt*="🎡"], img[alt*="🎢"], img[alt*="🎠"],
+  img[alt*="💎"], img[alt*="📱"], img[alt*="📲"], img[alt*="💻"], img[alt*="⌨"], img[alt*="🖥"], img[alt*="🖨"], img[alt*="🖱"], img[alt*="🖲"], img[alt*="🕹"], img[alt*="🗜"], img[alt*="💽"], img[alt*="💾"], img[alt*="💿"], img[alt*="📀"], img[alt*="📼"], img[alt*="📷"], img[alt*="📸"], img[alt*="📹"], img[alt*="🎥"], img[alt*="📽"], img[alt*="🎞"], img[alt*="📞"], img[alt*="☎"], img[alt*="📟"], img[alt*="📠"], img[alt*="📺"], img[alt*="📻"], img[alt*="🎙"], img[alt*="🎚"], img[alt*="🎛"], img[alt*="🧭"], img[alt*="⏱"], img[alt*="⏲"], img[alt*="⏰"], img[alt*="🕐"], img[alt*="🕑"], img[alt*="🕒"], img[alt*="🕓"], img[alt*="🕔"], img[alt*="🕕"], img[alt*="🕖"], img[alt*="🕗"], img[alt*="🕘"], img[alt*="🕙"], img[alt*="🕚"], img[alt*="🕛"], img[alt*="🕜"], img[alt*="🕝"], img[alt*="🕞"], img[alt*="🕟"], img[alt*="🕠"], img[alt*="🕡"], img[alt*="🕢"], img[alt*="🕣"], img[alt*="🕤"], img[alt*="🕥"], img[alt*="🕦"], img[alt*="🕧"], img[alt*="🌑"], img[alt*="🌒"], img[alt*="🌓"], img[alt*="🌔"], img[alt*="🌕"], img[alt*="🌖"], img[alt*="🌗"], img[alt*="🌘"], img[alt*="🌙"], img[alt*="🌚"], img[alt*="🌛"], img[alt*="🌜"], img[alt*="🌡"], img[alt*="☀"], img[alt*="🔆"], img[alt*="🔅"], img[alt*="💡"], img[alt*="🔦"], img[alt*="🕯"], img[alt*="🪔"], img[alt*="🧯"], img[alt*="🛢"], img[alt*="💸"], img[alt*="💵"], img[alt*="💴"], img[alt*="💶"], img[alt*="💷"], img[alt*="💰"], img[alt*="💳"], img[alt*="🪙"], img[alt*="💎"], img[alt*="⚖"], img[alt*="🧰"], img[alt*="🔧"], img[alt*="🔨"], img[alt*="⚒"], img[alt*="🛠"], img[alt*="⛏"], img[alt*="🪓"], img[alt*="🪚"], img[alt*="🔩"], img[alt*="⚙"], img[alt*="🧱"], img[alt*="⛓"], img[alt*="🧲"], img[alt*="🔫"], img[alt*="💣"], img[alt*="🧨"], img[alt*="🪃"], img[alt*="🏹"], img[alt*="🛡"], img[alt*="🪚"], img[alt*="🔪"], img[alt*="⚔"], img[alt*="🪆"],
+  img[alt*="📚"], img[alt*="📖"], img[alt*="📒"], img[alt*="📕"], img[alt*="📗"], img[alt*="📘"], img[alt*="📙"], img[alt*="📓"], img[alt*="📔"], img[alt*="📑"], img[alt*="📃"], img[alt*="📄"], img[alt*="📰"], img[alt*="🗞"], img[alt*="📊"], img[alt*="📈"], img[alt*="📉"], img[alt*="🗒"], img[alt*="🗓"], img[alt*="📆"], img[alt*="📅"], img[alt*="🗑"], img[alt*="📇"], img[alt*="🗃"], img[alt*="🗳"], img[alt*="🗄"], img[alt*="📋"], img[alt*="📌"], img[alt*="📍"], img[alt*="📎"], img[alt*="🖇"], img[alt*="📏"], img[alt*="📐"], img[alt*="✂"], img[alt*="🗝"], img[alt*="🔐"], img[alt*="🔒"], img[alt*="🔓"], img[alt*="🔏"], img[alt*="🔑"], img[alt*="🗝"], img[alt*="🔨"], img[alt*="🪓"], img[alt*="⛏"], img[alt*="⚒"], img[alt*="🛠"], img[alt*="🗡"], img[alt*="⚔"], img[alt*="🔫"], img[alt*="🪃"], img[alt*="🏹"], img[alt*="🛡"], img[alt*="🪚"], img[alt*="🔧"], img[alt*="🪛"], img[alt*="🔩"], img[alt*="⚙"], img[alt*="🗜"], img[alt*="⚖"], img[alt*="🦯"], img[alt*="🔗"], img[alt*="⛓"], img[alt*="🪝"], img[alt*="🧰"], img[alt*="🧲"], img[alt*="🪜"], img[alt*="🧪"], img[alt*="🧫"], img[alt*="🧬"], img[alt*="🔬"], img[alt*="🔭"], img[alt*="📡"],
+  svg.emoji,
+  [data-twemoji] {
+    width: 1.2em !important;
+    height: 1.2em !important;
+    max-width: 1.2em !important;
+    max-height: 1.2em !important;
+    display: inline-block !important;
+    vertical-align: -0.2em !important;
+    margin: 0 0.05em 0 0.1em !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    transition: none !important;
   }
   
   body {
@@ -68,15 +168,210 @@
     letter-spacing: -0.01em;
   }
   
-  /* Code and monospace */
+  /* Enhanced Code Block Styling */
   code, pre, .highlight {
-    font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', monospace !important;
+    font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace !important;
+    font-feature-settings: "liga", "calt", "ss01", "ss02", "ss03", "ss04", "ss05";
+    font-variant-ligatures: contextual;
   }
   
-  /* Refined link styling */
+  /* Inline code styling */
+  code:not(pre code) {
+    background: linear-gradient(135deg, #F8E8EC, #FDF5F7);
+    color: #8B1538;
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    font-size: 0.875em;
+    font-weight: 500;
+    border: 1px solid rgba(139, 21, 56, 0.1);
+    box-shadow: 0 1px 3px rgba(139, 21, 56, 0.08);
+    transition: all 0.15s ease;
+    letter-spacing: 0.01em;
+  }
+  
+  code:not(pre code):hover {
+    background: linear-gradient(135deg, #F3D5DC, #F8E8EC);
+    border-color: rgba(139, 21, 56, 0.2);
+    box-shadow: 0 2px 6px rgba(139, 21, 56, 0.12);
+  }
+  
+  /* Code block styling */
+  pre {
+    background: linear-gradient(135deg, #FEFCFD 0%, #FDF5F7 100%) !important;
+    border: 1px solid #E8D4D8 !important;
+    border-left: 4px solid #8B1538 !important;
+    border-radius: 8px !important;
+    padding: 1.5rem 1.75rem !important;
+    margin: 2rem 0 !important;
+    overflow-x: auto !important;
+    box-shadow: 0 4px 12px rgba(139, 21, 56, 0.08), 
+                0 1px 3px rgba(139, 21, 56, 0.12) !important;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+  
+  pre:hover {
+    border-left-color: #B91C4D !important;
+    box-shadow: 0 6px 20px rgba(139, 21, 56, 0.12), 
+                0 2px 6px rgba(139, 21, 56, 0.16) !important;
+  }
+  
+  /* Code in pre blocks */
+  pre code {
+    background: none !important;
+    color: #2D1B20 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-size: inherit !important;
+    font-weight: 400 !important;
+    display: block;
+    white-space: pre;
+    word-wrap: normal;
+    word-break: normal;
+    tab-size: 2;
+  }
+  
+  /* Copy button for code blocks */
+  pre::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 0.75rem;
+    right: 3.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #8B7B7E;
+    background: rgba(248, 232, 236, 0.8);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(139, 21, 56, 0.1);
+    z-index: 5;
+  }
+  
+  /* Syntax highlighting customization */
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: #8B7B7E;
+    font-style: italic;
+  }
+  
+  .token.punctuation {
+    color: #5A4A4E;
+  }
+  
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    color: #A61E3C;
+  }
+  
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: #8B1538;
+  }
+  
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string {
+    color: #B91C4D;
+  }
+  
+  .token.atrule,
+  .token.attr-value,
+  .token.keyword {
+    color: #5A4A4E;
+    font-weight: 500;
+  }
+  
+  .token.function,
+  .token.class-name {
+    color: #2D1B20;
+    font-weight: 500;
+  }
+  
+  .token.regex,
+  .token.important,
+  .token.variable {
+    color: #A61E3C;
+  }
+  
+  /* Math styling integration */
+  mjx-container[jax="SVG"] {
+    margin: 1em 0;
+    padding: 0.5em 0;
+  }
+  
+  mjx-container[jax="SVG"][display="true"] {
+    background: linear-gradient(135deg, #FEFCFD 0%, #FDF5F7 100%);
+    border: 1px solid #E8D4D8;
+    border-left: 4px solid #8B1538;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 8px rgba(139, 21, 56, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  mjx-container[jax="SVG"][display="true"]:hover {
+    border-left-color: #B91C4D;
+    box-shadow: 0 4px 12px rgba(139, 21, 56, 0.12);
+  }
+  
+  /* Inline math */
+  mjx-container[jax="SVG"][display="false"] {
+    background: rgba(248, 232, 236, 0.3);
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    margin: 0 0.1em;
+  }
+  
+  /* Math numbering and references */
+  .mjx-tag {
+    color: #8B1538 !important;
+    font-weight: 500;
+  }
+  
+  /* Scrollbar styling for code blocks */
+  pre::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  
+  pre::-webkit-scrollbar-track {
+    background: rgba(248, 232, 236, 0.3);
+    border-radius: 4px;
+  }
+  
+  pre::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #8B1538, #B91C4D);
+    border-radius: 4px;
+  }
+  
+  pre::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #B91C4D, #8B1538);
+  }
+  
+  /* Refined link styling with smooth animations */
   a {
     color: #8B1538;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
   }
@@ -84,87 +379,209 @@
   a:hover {
     color: #B91C4D;
     text-decoration-thickness: 2px;
+    transform: translateY(-0.5px);
   }
   
-  /* Clean navigation */
+  /* Clean navigation with enhanced animations */
   .site-nav .page-link {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     letter-spacing: 0.01em;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  /* Elegant form elements */
-  .btn, button, .elegant-button {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    letter-spacing: 0.01em;
-  }
-  
-  /* Consistent elegant button styling */
+  /* Enhanced Button System */
   .elegant-button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg, #8B1538, #B91C4D);
-    color: white !important;
-    text-decoration: none;
-    border-radius: 2px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 0.9rem;
-    transition: all 0.3s ease;
+    letter-spacing: 0.01em;
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, #8B1538 0%, #A61E3C 50%, #B91C4D 100%);
+    color: white !important;
+    box-shadow: 0 3px 12px rgba(139, 21, 56, 0.15);
+  }
+  
+  .elegant-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+    z-index: 0;
+  }
+  
+  .elegant-button {
+    position: relative;
+    z-index: 1;
   }
   
   .elegant-button:hover {
     color: white !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3);
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(139, 21, 56, 0.25);
   }
   
-  /* GitHub-style emoji styling */
-  .emoji {
-    height: 1.2em;
-    width: 1.2em;
-    margin: 0 0.05em 0 0.1em;
-    vertical-align: -0.2em;
-    display: inline-block;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
+  .elegant-button:hover::before {
+    left: 100%;
   }
   
-  /* Enhanced readability */
-  blockquote {
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.01em;
+  .elegant-button:active {
+    transform: translateY(0);
   }
   
-  /* Tag styling */
+  /* Button variants */
+  .elegant-button-secondary {
+    background: linear-gradient(135deg, #F8E8EC 0%, #FDF5F7 100%);
+    color: #8B1538 !important;
+    border: 2px solid #E8D4D8;
+    box-shadow: 0 2px 8px rgba(139, 21, 56, 0.08);
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+  }
+  
+  .elegant-button-secondary:hover {
+    color: #8B1538 !important;
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+    background: linear-gradient(135deg, #F3D5DC 0%, #F8E8EC 100%);
+    border-color: #8B1538;
+    box-shadow: 0 4px 16px rgba(139, 21, 56, 0.15);
+  }
+  
+  .elegant-button-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+  }
+  
+  .elegant-button-icon {
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    border-radius: 50%;
+    padding: 0;
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+  }
+  
+  /* Enhanced Tags */
   .tag {
-    font-family: 'Inter', sans-serif !important;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    font-family: 'Inter', sans-serif;
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 0.02em;
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: #F8E8EC;
+    background: linear-gradient(135deg, #F8E8EC, #FDF5F7);
     color: #8B1538;
-    border-radius: 2px;
-    text-transform: none;
+    border: 1px solid #E8D4D8;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(139, 21, 56, 0.05);
   }
   
-  /* Smooth font scaling for different screen sizes */
+  .tag:hover {
+    background: linear-gradient(135deg, #8B1538, #B91C4D);
+    color: white;
+    border-color: #8B1538;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(139, 21, 56, 0.2);
+  }
+  
+  /* Enhanced Cards */
+  .hover-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(139, 21, 56, 0.05);
+  }
+  
+  .hover-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(139, 21, 56, 0.12);
+  }
+  
+  /* Social Share Buttons */
+  .social-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    cursor: pointer;
+  }
+  
+  .social-share-btn:hover {
+    color: white;
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Custom Selection Colors */
+  ::selection {
+    background: rgba(139, 21, 56, 0.2);
+    color: #2D1B20;
+  }
+  
+  ::-moz-selection {
+    background: rgba(139, 21, 56, 0.2);
+    color: #2D1B20;
+  }
+  
+  /* Enhanced Focus States */
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  a:focus-visible {
+    outline: 2px solid #8B1538;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  
+  /* Responsive Typography */
   @media (max-width: 768px) {
     body {
       font-size: 0.95rem;
+      line-height: 1.6;
     }
     
     h1 {
-      font-size: 2rem;
+      font-size: 1.75rem;
     }
     
     h2 {
@@ -174,38 +591,284 @@
     h3 {
       font-size: 1.25rem;
     }
+    
+    .lead {
+      font-size: 1rem;
+    }
+    
+    pre {
+      padding: 1rem 1.25rem !important;
+      font-size: 0.85rem;
+      margin: 1.5rem 0 !important;
+    }
+    
+    code:not(pre code) {
+      font-size: 0.8em;
+      padding: 0.15em 0.4em;
+    }
+    
+    mjx-container[jax="SVG"][display="true"] {
+      padding: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .elegant-button {
+      padding: 0.65rem 1.25rem;
+      font-size: 0.85rem;
+    }
+    
+    .elegant-button-small {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.8rem;
+    }
   }
   
   @media (max-width: 480px) {
+    pre {
+      padding: 0.75rem 1rem !important;
+      font-size: 0.8rem;
+      border-radius: 6px !important;
+      margin: 1rem 0 !important;
+    }
+    
+    code:not(pre code) {
+      font-size: 0.75em;
+      padding: 0.1em 0.3em;
+    }
+  }
+  
+  /* Animation system */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Immediate visibility for critical content */
+  .post-content .animate-on-scroll,
+  .content-wrapper .animate-on-scroll,
+  .no-animation {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  
+  /* Staggered animation for multiple elements */
+  .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+  .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+  .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+  .animate-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+  .animate-on-scroll:nth-child(5) { transition-delay: 0.5s; }
+  
+  /* Loading animation for async content */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  .fade-in { animation: fadeIn 0.5s ease-out; }
+  .slide-in-up { animation: slideInUp 0.6s ease-out; }
+  .pulse { animation: pulse 2s infinite; }
+  
+  /* Print styles */
+  @media print {
     body {
-      font-size: 0.9rem;
-      line-height: 1.7;
+      background: white;
+      color: black;
+      font-size: 12pt;
+      line-height: 1.4;
     }
     
-    h1 {
-      font-size: 1.75rem;
-      letter-spacing: -0.02em;
+    h1, h2, h3, h4, h5, h6 {
+      color: black;
+      page-break-after: avoid;
     }
     
-    h2 {
-      font-size: 1.35rem;
+    pre {
+      background: #f5f5f5 !important;
+      border: 1px solid #ddd !important;
+      padding: 0.5rem !important;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .elegant-button,
+    .social-share-btn {
+      display: none;
+    }
+    
+    a {
+      color: black;
+      text-decoration: underline;
+    }
+    
+    a[href]:after {
+      content: " (" attr(href) ")";
+      font-size: 0.8em;
+      color: #666;
     }
   }
 </style>
 
 <script>
-  // Initialize GitHub-style emojis when page loads
+  // Enhanced scroll-based animations with fallback
   document.addEventListener('DOMContentLoaded', function() {
-    // Parse emojis with Twemoji (GitHub style)
-    twemoji.parse(document.body, {
-      folder: 'svg',
-      ext: '.svg',
-      base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/',
-      className: 'emoji',
-      attributes: function() {
-        return {
-          style: 'background: transparent !important; box-shadow: none !important; border: none !important;'
+    // Immediate fallback for critical content
+    const criticalElements = document.querySelectorAll('.post-content .animate-on-scroll, .content-wrapper .animate-on-scroll, .no-animation');
+    criticalElements.forEach(el => {
+      el.classList.add('visible');
+    });
+    
+    // Create intersection observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: '50px 0px -10px 0px'
+    });
+    
+    // Observe elements with animation classes (excluding critical content)
+    document.querySelectorAll('.animate-on-scroll:not(.post-content .animate-on-scroll):not(.content-wrapper .animate-on-scroll):not(.no-animation)').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Fallback: show all animations after 2 seconds
+    setTimeout(() => {
+      document.querySelectorAll('.animate-on-scroll:not(.visible)').forEach(el => {
+        el.classList.add('visible');
+      });
+    }, 2000);
+    
+    // Add language labels to code blocks
+    document.querySelectorAll('pre code[class*="language-"]').forEach(block => {
+      const pre = block.parentElement;
+      const className = block.className;
+      const match = className.match(/language-(\w+)/);
+      if (match) {
+        const language = match[1];
+        const languageNames = {
+          'js': 'JavaScript',
+          'javascript': 'JavaScript',
+          'ts': 'TypeScript',
+          'typescript': 'TypeScript',
+          'py': 'Python',
+          'python': 'Python',
+          'css': 'CSS',
+          'html': 'HTML',
+          'json': 'JSON',
+          'yaml': 'YAML',
+          'yml': 'YAML',
+          'markdown': 'Markdown',
+          'md': 'Markdown',
+          'bash': 'Bash',
+          'sh': 'Shell',
+          'sql': 'SQL',
+          'r': 'R',
+          'cpp': 'C++',
+          'c': 'C',
+          'java': 'Java',
+          'go': 'Go',
+          'rust': 'Rust',
+          'php': 'PHP',
+          'ruby': 'Ruby',
+          'swift': 'Swift',
+          'kotlin': 'Kotlin',
+          'scala': 'Scala',
+          'tex': 'LaTeX',
+          'latex': 'LaTeX'
         };
+        pre.setAttribute('data-language', languageNames[language] || language.toUpperCase());
+      }
+    });
+    
+    // Enhanced code block copy functionality
+    document.querySelectorAll('pre').forEach(pre => {
+      // Create copy button
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-code-btn';
+      copyButton.innerHTML = '📋';
+      copyButton.title = 'Copy code';
+      copyButton.style.cssText = `
+        position: absolute;
+        top: 0.75rem;
+        right: 0.5rem;
+        background: rgba(139, 21, 56, 0.1);
+        border: 1px solid rgba(139, 21, 56, 0.2);
+        border-radius: 4px;
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(4px);
+        z-index: 10;
+      `;
+      
+      copyButton.addEventListener('mouseenter', () => {
+        copyButton.style.background = 'rgba(139, 21, 56, 0.2)';
+        copyButton.style.transform = 'scale(1.05)';
+      });
+      
+      copyButton.addEventListener('mouseleave', () => {
+        copyButton.style.background = 'rgba(139, 21, 56, 0.1)';
+        copyButton.style.transform = 'scale(1)';
+      });
+      
+      copyButton.addEventListener('click', async () => {
+        const code = pre.querySelector('code');
+        const text = code ? code.textContent : pre.textContent;
+        
+        try {
+          await navigator.clipboard.writeText(text);
+          copyButton.innerHTML = '✅';
+          copyButton.style.background = 'rgba(16, 185, 129, 0.2)';
+          if (typeof parseEmojis === 'function') {
+            parseEmojis(copyButton);
+          }
+          setTimeout(() => {
+            copyButton.innerHTML = '📋';
+            copyButton.style.background = 'rgba(139, 21, 56, 0.1)';
+            if (typeof parseEmojis === 'function') {
+              parseEmojis(copyButton);
+            }
+          }, 2000);
+        } catch (err) {
+          copyButton.innerHTML = '❌';
+          if (typeof parseEmojis === 'function') {
+            parseEmojis(copyButton);
+          }
+          setTimeout(() => {
+            copyButton.innerHTML = '📋';
+            if (typeof parseEmojis === 'function') {
+              parseEmojis(copyButton);
+            }
+          }, 2000);
+        }
+      });
+      
+      pre.appendChild(copyButton);
+      pre.style.position = 'relative';
+      
+      // Parse emojis in the copy button
+      if (typeof parseEmojis === 'function') {
+        parseEmojis(copyButton);
       }
     });
   });
@@ -220,7 +883,7 @@
         className: 'emoji',
         attributes: function() {
           return {
-            style: 'background: transparent !important; box-shadow: none !important; border: none !important;'
+            style: 'width: 1.2em !important; height: 1.2em !important; display: inline-block !important; vertical-align: -0.2em !important; margin: 0 0.05em 0 0.1em !important; background: transparent !important; box-shadow: none !important; border: none !important; border-radius: 0 !important; max-width: 1.2em !important; max-height: 1.2em !important;'
           };
         }
       });
@@ -229,4 +892,57 @@
   
   // Make parseEmojis available globally
   window.parseEmojis = parseEmojis;
+  
+  // Initialize emoji parsing when DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    // Parse emojis immediately
+    parseEmojis();
+    
+    // Set up a mutation observer to handle dynamically added content
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.addedNodes.length > 0) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              parseEmojis(node);
+            }
+          });
+        }
+      });
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  });
+  
+  // Enhanced math rendering callback
+  window.addEventListener('load', () => {
+    // Re-parse emojis after everything is loaded
+    setTimeout(() => {
+      parseEmojis();
+    }, 200);
+    
+    // Ensure MathJax renders after animations and content are visible
+    if (window.MathJax) {
+      setTimeout(() => {
+        MathJax.startup.promise.then(() => {
+          // Re-render math if needed
+          MathJax.typesetPromise();
+        });
+      }, 500);
+    }
+  });
+  
+  // Additional MathJax re-render when content changes
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise().catch((err) => {
+          console.log('MathJax rendering error:', err);
+        });
+      }
+    }, 1000);
+  });
 </script> 

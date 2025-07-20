@@ -5,17 +5,14 @@ layout: default
 <div class="post-layout-container" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
   
   <!-- TOC Toggle Button -->
-  <button id="toc-toggle" class="toc-toggle-btn" 
-          style="position: fixed; top: 50%; right: 1rem; z-index: 1002; 
-                 background: #8B1538; color: white; border: none; border-radius: 50%; 
-                 width: 48px; height: 48px; cursor: pointer; box-shadow: 0 2px 8px rgba(139, 21, 56, 0.3); 
-                 transition: all 0.3s ease; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;"
+  <button id="toc-toggle" class="elegant-button-icon toc-toggle-btn" 
+          style="position: fixed; top: 50%; right: 1rem; z-index: 1002; background: #8B1538; color: white; border: none; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3);"
           title="Toggle Table of Contents">
     📋
   </button>
 
   <!-- Main Post Content (now full width) -->
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting" style="max-width: 800px; margin: 0 auto;">
+  <article class="post animate-on-scroll" itemscope itemtype="http://schema.org/BlogPosting" style="max-width: 800px; margin: 0 auto;">
 
     <!-- Post Header -->
     <header class="post-header" style="text-align: center; margin-bottom: 3rem; padding: 1.5rem 0;">
@@ -25,14 +22,14 @@ layout: default
       <div class="post-meta-tags" style="margin-bottom: 1.5rem;">
         {% if page.categories %}
           {% for category in page.categories limit:3 %}
-          <span style="display: inline-block; padding: 0.3rem 0.8rem; background: #8B1538; color: white; border-radius: 2px; font-size: 0.8rem; font-weight: 500; margin: 0.2rem;">
+          <span class="tag">
             {{ category | replace: '-', ' ' | capitalize }}
           </span>
           {% endfor %}
         {% endif %}
         {% if page.tags %}
           {% for tag in page.tags limit:3 %}
-          <span style="display: inline-block; padding: 0.3rem 0.8rem; background: #F8E8EC; color: #8B1538; border-radius: 2px; font-size: 0.8rem; font-weight: 500; margin: 0.2rem;">
+          <span class="tag">
             #{{ tag }}
           </span>
           {% endfor %}
@@ -41,7 +38,7 @@ layout: default
       {% endif %}
       
       <!-- Post Title -->
-      <h1 class="post-title" itemprop="name headline" style="font-size: 2.75rem; margin-bottom: 1rem; color: #8B1538; font-weight: 700; line-height: 1.2; letter-spacing: -0.03em;">
+      <h1 class="post-title" itemprop="name headline" id="dynamic-title" style="font-size: 2.75rem; margin-bottom: 1rem; color: #8B1538; font-weight: 700; line-height: 1.2; letter-spacing: -0.03em;">
         {{ page.title | escape }}
       </h1>
       
@@ -50,7 +47,7 @@ layout: default
       
       <!-- Post Excerpt/Lead -->
       {% if page.excerpt %}
-      <p class="post-lead" style="font-size: 1.2rem; color: #5A4A4E; max-width: 700px; margin: 0 auto 1.5rem auto; line-height: 1.6; font-weight: 400; font-style: italic;">
+      <p class="post-lead" id="dynamic-excerpt" style="font-size: 1.2rem; color: #5A4A4E; max-width: 700px; margin: 0 auto 1.5rem auto; line-height: 1.6; font-weight: 400; font-style: italic;">
         {{ page.excerpt | strip_html | strip }}
       </p>
       {% endif %}
@@ -89,6 +86,21 @@ layout: default
           <span>{{ content | number_of_words }} words</span>
         </div>
         
+        <!-- Language Switcher (if multilingual) -->
+        {% if page.multilingual and page.languages.size > 1 %}
+        <div style="display: flex; align-items: center; gap: 0.3rem; margin-left: 0.5rem;">
+          <span style="font-size: 0.8rem; color: #8B7B7E;">🌐</span>
+          <div class="lang-switcher" style="display: flex; gap: 0.2rem;">
+            {% for lang in page.languages %}
+            <button class="lang-btn elegant-button-small" data-lang="{{ lang.code }}" 
+                    {% if lang.code == page.current_lang %}data-active="true"{% endif %}>
+              {{ lang.name }}
+            </button>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+        
       </div>
       
       <!-- Last Modified Date (if different from publish date) -->
@@ -104,10 +116,10 @@ layout: default
     </header>
 
     <!-- Post Content -->
-    <div class="post-content" itemprop="articleBody">
+    <div class="post-content no-animation" itemprop="articleBody">
       
       <!-- Main Content -->
-      <div class="content-wrapper" style="line-height: 1.8; color: #2D1B20; font-size: 1.05rem;">
+      <div class="content-wrapper no-animation" style="line-height: 1.8; color: #2D1B20; font-size: 1.05rem;">
         {{ content }}
       </div>
       
@@ -116,7 +128,7 @@ layout: default
         
         <!-- Post Summary/Key Takeaways -->
         {% if page.key_takeaways %}
-        <div style="background: #FDF5F7; border-left: 3px solid #B91C4D; padding: 1.5rem; margin-bottom: 2rem; border-radius: 0 4px 4px 0;">
+        <div class="hover-card" style="background: #FDF5F7; border-left: 3px solid #B91C4D; padding: 1.5rem; margin-bottom: 2rem; border-radius: 0 4px 4px 0;">
           <h3 style="margin: 0 0 1rem 0; color: #8B1538; font-size: 1.1rem; font-weight: 600;">🎯 Key Takeaways</h3>
           <ul style="margin: 0; padding-left: 1.5rem; color: #5A4A4E;">
             {% for takeaway in page.key_takeaways %}
@@ -132,7 +144,7 @@ layout: default
           <h3 style="margin: 0 0 1rem 0; color: #8B1538; font-size: 1rem; font-weight: 600;">🏷️ Tags</h3>
           <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
             {% for tag in page.tags %}
-            <a href="/tags/#{{ tag | slugify }}" class="tag-link" style="display: inline-block; padding: 0.3rem 0.75rem; background: #F8E8EC; color: #8B1538; border-radius: 2px; font-size: 0.8rem; font-weight: 500; text-decoration: none; transition: all 0.2s ease;">
+            <a href="/tags/#{{ tag | slugify }}" class="tag">
               #{{ tag }}
             </a>
             {% endfor %}
@@ -145,7 +157,7 @@ layout: default
     </div>
 
     <!-- Compact Social Sharing -->
-    <div class="post-sharing-compact" style="margin: 2rem 0; padding: 1rem; background: #FDF5F7; border-left: 3px solid #8B1538; border-radius: 0 4px 4px 0;">
+    <div class="post-sharing-compact hover-card" style="margin: 2rem 0; padding: 1rem; background: #FDF5F7; border-left: 3px solid #8B1538; border-radius: 0 4px 4px 0;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
         <h4 style="margin: 0; color: #8B1538; font-size: 0.95rem; font-weight: 600;">📢 Share this post</h4>
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -153,7 +165,8 @@ layout: default
           <!-- Twitter -->
           <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}&via={{ site.twitter_username | url_encode }}" 
              target="_blank" rel="noopener" 
-             style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.8rem; background: #1DA1F2; color: white; text-decoration: none; border-radius: 2px; font-size: 0.75rem; font-weight: 500; transition: all 0.2s ease;"
+             class="social-share-btn"
+             style="background: #1DA1F2;"
              title="Share on Twitter">
             🐦
           </a>
@@ -161,21 +174,24 @@ layout: default
           <!-- LinkedIn -->
           <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}" 
              target="_blank" rel="noopener"
-             style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.8rem; background: #0077B5; color: white; text-decoration: none; border-radius: 2px; font-size: 0.75rem; font-weight: 500; transition: all 0.2s ease;"
+             class="social-share-btn"
+             style="background: #0077B5;"
              title="Share on LinkedIn">
             💼
           </a>
           
           <!-- Email -->
           <a href="mailto:?subject={{ page.title | url_encode }}&body=Check out this post: {{ page.url | absolute_url | url_encode }}" 
-             style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.8rem; background: #8B1538; color: white; text-decoration: none; border-radius: 2px; font-size: 0.75rem; font-weight: 500; transition: all 0.2s ease;"
+             class="social-share-btn"
+             style="background: #8B1538;"
              title="Share via Email">
             📧
           </a>
           
           <!-- Copy Link -->
           <button onclick="copyPostLink()" 
-                  style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.8rem; background: #6B7280; color: white; border: none; border-radius: 2px; font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;"
+                  class="social-share-btn"
+                  style="background: #6B7280;"
                   title="Copy Link">
             🔗
           </button>
@@ -187,12 +203,12 @@ layout: default
     <!-- Related Posts -->
     {% assign related_posts = site.related_posts | limit: 3 %}
     {% if related_posts.size > 0 %}
-    <div class="related-posts" style="margin-top: 3rem;">
+    <div class="related-posts animate-on-scroll" style="margin-top: 3rem;">
       <h3 style="text-align: center; margin: 0 0 2rem 0; color: #8B1538; font-size: 1.4rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 2px solid #F8E8EC;">📚 Related Posts</h3>
       
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
         {% for post in related_posts %}
-        <article style="padding: 1.5rem; border-left: 3px solid #B91C4D; background: #FDF5F7; transition: all 0.2s ease;">
+        <article class="hover-card" style="padding: 1.5rem; border-left: 3px solid #B91C4D; background: #FDF5F7;">
           
           <!-- Post Meta -->
           <div style="margin-bottom: 1rem; color: #8B7B7E; font-size: 0.85rem;">
@@ -200,7 +216,7 @@ layout: default
               {{ post.date | date: "%B %-d, %Y" }}
             </time>
             {% if post.categories.first %}
-            <span style="margin-left: 0.5rem; padding: 0.2rem 0.6rem; background: #F8E8EC; color: #8B1538; border-radius: 2px; font-size: 0.75rem;">
+            <span class="tag" style="margin-left: 0.5rem; font-size: 0.75rem;">
               {{ post.categories.first | replace: '-', ' ' | capitalize }}
             </span>
             {% endif %}
@@ -221,7 +237,7 @@ layout: default
           {% endif %}
           
           <!-- Read More -->
-          <a href="{{ post.url | relative_url }}" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #8B1538; font-weight: 500; text-decoration: none; font-size: 0.85rem; transition: all 0.2s ease;">
+          <a href="{{ post.url | relative_url }}" class="elegant-button-secondary elegant-button-small">
             Read more <span style="transition: transform 0.2s ease;">→</span>
           </a>
           
@@ -232,13 +248,13 @@ layout: default
     {% endif %}
 
     <!-- Post Navigation -->
-    <nav class="post-navigation" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #E8D4D8;">
+    <nav class="post-navigation animate-on-scroll" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #E8D4D8;">
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
         
         <!-- Previous Post -->
         <div style="text-align: left;">
           {% if page.previous.url %}
-          <a href="{{ page.previous.url | relative_url }}" style="display: block; padding: 1.25rem; border-left: 3px solid #8B1538; background: #FDF5F7; text-decoration: none; transition: all 0.2s ease;">
+          <a href="{{ page.previous.url | relative_url }}" class="hover-card" style="display: block; padding: 1.25rem; border-left: 3px solid #8B1538; background: #FDF5F7; text-decoration: none;">
             <div style="color: #8B7B7E; font-size: 0.8rem; margin-bottom: 0.5rem; font-weight: 500;">← Previous Post</div>
             <div style="color: #8B1538; font-weight: 600; line-height: 1.3;">{{ page.previous.title | truncate: 50 }}</div>
           </a>
@@ -248,7 +264,7 @@ layout: default
         <!-- Next Post -->
         <div style="text-align: right;">
           {% if page.next.url %}
-          <a href="{{ page.next.url | relative_url }}" style="display: block; padding: 1.25rem; border-right: 3px solid #8B1538; background: #FDF5F7; text-decoration: none; transition: all 0.2s ease;">
+          <a href="{{ page.next.url | relative_url }}" class="hover-card" style="display: block; padding: 1.25rem; border-right: 3px solid #8B1538; background: #FDF5F7; text-decoration: none;">
             <div style="color: #8B7B7E; font-size: 0.8rem; margin-bottom: 0.5rem; font-weight: 500;">Next Post →</div>
             <div style="color: #8B1538; font-weight: 600; line-height: 1.3;">{{ page.next.title | truncate: 50 }}</div>
           </a>
@@ -260,7 +276,7 @@ layout: default
 
     <!-- Back to Blog -->
     <div style="text-align: center; margin-top: 2rem;">
-      <a href="/blog/" class="elegant-button" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #8B1538, #B91C4D); color: white; text-decoration: none; border-radius: 2px; font-weight: 500; font-size: 0.9rem; transition: all 0.3s ease;">
+      <a href="/blog/" class="elegant-button">
         ← Back to All Posts
       </a>
     </div>
@@ -269,27 +285,178 @@ layout: default
 
   <!-- Floating TOC Sidebar -->
   <aside id="sidebar-toc-container" class="floating-toc" 
-         style="position: fixed; top: 6rem; right: 1rem; width: 300px; max-height: 70vh; 
-                background: rgba(253, 245, 247, 0.95); backdrop-filter: blur(10px); 
-                border: 1px solid #E8D4D8; border-radius: 8px; box-shadow: 0 4px 20px rgba(139, 21, 56, 0.15); 
-                z-index: 1001; transition: all 0.3s ease; overflow-y: auto;">
-    <div style="padding: 1.5rem;">
-      <h3 style="margin: 0 0 1rem 0; color: #8B1538; font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid #E8D4D8; padding-bottom: 0.5rem;">
+         style="position: fixed; top: 6rem; right: 1rem; width: 280px; max-height: 60vh; 
+                background: rgba(253, 245, 247, 0.95); 
+                border: 1px solid #E8D4D8; border-radius: 6px; box-shadow: 0 4px 12px rgba(139, 21, 56, 0.1); 
+                z-index: 1001; overflow: hidden;
+                transition: all 0.3s ease;">
+    <div class="toc-content" style="padding: 1rem;">
+      <h3 style="margin: 0 0 0.75rem 0; color: #8B1538; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid #E8D4D8; padding-bottom: 0.5rem;">
         📋 Table of Contents
       </h3>
-      <div id="sidebar-toc" style="font-size: 0.85rem; line-height: 1.5;"></div>
+      <div id="sidebar-toc" style="font-size: 0.8rem; line-height: 1.3; max-height: calc(60vh - 80px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #E8D4D8 transparent;"></div>
     </div>
   </aside>
 
 </div>
 
-<!-- Table of Contents Generator Script -->
+<!-- Multilingual Support Script -->
+{% if page.multilingual and page.languages.size > 1 %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Parse language data safely
+  var langDataRaw = '{{ page.languages | jsonify | escape }}';
+  var langData;
+  try {
+    langData = JSON.parse(langDataRaw.replace(/&quot;/g, '"'));
+  } catch (e) {
+    console.error('Error parsing language data:', e);
+    return;
+  }
+  
+  const currentLang = '{{ page.current_lang }}';
+  const langButtons = document.querySelectorAll('.lang-btn');
+  const langContents = document.querySelectorAll('.lang-content');
+  const titleElement = document.getElementById('dynamic-title');
+  const excerptElement = document.getElementById('dynamic-excerpt');
+  
+  // Function to show TOC loading state
+  function showTocLoading() {
+    const loadingIndicator = document.querySelector('.toc-loading-indicator');
+    if (loadingIndicator) {
+      loadingIndicator.style.display = 'block';
+      loadingIndicator.style.animation = 'spin 1s linear infinite';
+    }
+  }
+  
+  // Function to hide TOC loading state
+  function hideTocLoading() {
+    const loadingIndicator = document.querySelector('.toc-loading-indicator');
+    if (loadingIndicator) {
+      loadingIndicator.style.display = 'none';
+      loadingIndicator.style.animation = '';
+    }
+  }
+  
+  // Function to switch language
+  function switchLanguage(targetLang) {
+    showTocLoading();
+    
+    // Update content visibility with smooth transition
+    langContents.forEach(content => {
+      const lang = content.getAttribute('data-lang');
+      if (lang === targetLang) {
+        content.style.opacity = '0';
+        content.style.display = 'block';
+        setTimeout(() => {
+          content.style.opacity = '1';
+        }, 50);
+      } else {
+        content.style.opacity = '0';
+        setTimeout(() => {
+          content.style.display = 'none';
+        }, 200);
+      }
+    });
+    
+    // Update button states with smooth transition
+    langButtons.forEach(btn => {
+      const lang = btn.getAttribute('data-lang');
+      btn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      if (lang === targetLang) {
+        btn.style.background = '#8B1538';
+        btn.style.color = 'white';
+        btn.style.borderColor = '#8B1538';
+        btn.style.transform = 'scale(1.05)';
+        btn.setAttribute('data-active', 'true');
+      } else {
+        btn.style.background = 'transparent';
+        btn.style.color = '#8B7B7E';
+        btn.style.borderColor = '#E8D4D8';
+        btn.style.transform = 'scale(1)';
+        btn.removeAttribute('data-active');
+      }
+    });
+    
+    // Update title and excerpt using textContent to preserve formatting
+    const langInfo = langData.find(l => l.code === targetLang);
+    if (langInfo && titleElement) {
+      titleElement.style.transition = 'opacity 0.3s ease';
+      titleElement.style.opacity = '0.5';
+      setTimeout(() => {
+        titleElement.textContent = langInfo.title || titleElement.textContent;
+        titleElement.style.opacity = '1';
+      }, 150);
+    }
+    if (langInfo && excerptElement) {
+      excerptElement.style.transition = 'opacity 0.3s ease';
+      excerptElement.style.opacity = '0.5';
+      setTimeout(() => {
+        excerptElement.textContent = langInfo.excerpt || excerptElement.textContent;
+        excerptElement.style.opacity = '1';
+      }, 150);
+    }
+    
+    // Store preference
+    localStorage.setItem('preferred-lang', targetLang);
+    
+    // Re-generate TOC after content changes - with proper timing
+    setTimeout(() => {
+      if (typeof generateTOC === 'function') {
+        generateTOC();
+        hideTocLoading();
+      }
+    }, 400); // Increased timeout to ensure content is fully switched
+  }
+  
+  // Always default to English first, then check saved preference
+  let initialLang = 'en';
+  const savedLang = localStorage.getItem('preferred-lang');
+  
+  // Check if saved language exists in available languages and use it
+  if (savedLang && langData.find(l => l.code === savedLang)) {
+    initialLang = savedLang;
+  }
+  
+  switchLanguage(initialLang);
+  
+  // Add click handlers
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetLang = this.getAttribute('data-lang');
+      switchLanguage(targetLang);
+    });
+    
+    // Enhanced hover effects
+    btn.addEventListener('mouseenter', function() {
+      if (!this.hasAttribute('data-active')) {
+        this.style.background = '#F8E8EC';
+        this.style.color = '#8B1538';
+        this.style.borderColor = '#8B1538';
+        this.style.transform = 'translateY(-2px)';
+      }
+    });
+    
+    btn.addEventListener('mouseleave', function() {
+      if (!this.hasAttribute('data-active')) {
+        this.style.background = 'transparent';
+        this.style.color = '#8B7B7E';
+        this.style.borderColor = '#E8D4D8';
+        this.style.transform = 'translateY(0)';
+      }
+    });
+  });
+});
+</script>
+{% endif %}
+
+<!-- Enhanced Table of Contents Generator Script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const tocContainer = document.getElementById('sidebar-toc');
   const tocSidebar = document.getElementById('sidebar-toc-container');
   const tocToggle = document.getElementById('toc-toggle');
-  const headings = document.querySelectorAll('.content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4, .content-wrapper h5, .content-wrapper h6');
   
   // TOC state management
   let tocVisible = localStorage.getItem('toc-visible') !== 'false'; // Default to true
@@ -297,19 +464,32 @@ document.addEventListener('DOMContentLoaded', function() {
   // Apply initial state
   function applyTocState() {
     if (tocVisible) {
+      // Show with smooth fade in
       tocSidebar.style.display = 'block';
-      tocSidebar.style.opacity = '1';
-      tocSidebar.style.transform = 'translateX(0)';
+      tocSidebar.style.opacity = '0';
+      
       tocToggle.innerHTML = '📋';
       tocToggle.title = 'Hide Table of Contents';
-    } else {
-      tocSidebar.style.opacity = '0';
-      tocSidebar.style.transform = 'translateX(100%)';
+      tocToggle.style.background = '#8B1538';
+      
+      // Trigger fade in with slight delay for smooth animation
       setTimeout(() => {
-        if (!tocVisible) tocSidebar.style.display = 'none';
-      }, 300);
+        tocSidebar.style.opacity = '1';
+      }, 50);
+    } else {
+      // Hide with smooth fade out
+      tocSidebar.style.opacity = '0';
+      
       tocToggle.innerHTML = '📖';
       tocToggle.title = 'Show Table of Contents';
+      tocToggle.style.background = '#6B7280';
+      
+      // Hide after fade out completes
+      setTimeout(() => {
+        if (!tocVisible) {
+          tocSidebar.style.display = 'none';
+        }
+      }, 300); // Match the transition duration
     }
   }
   
@@ -318,55 +498,69 @@ document.addEventListener('DOMContentLoaded', function() {
     tocVisible = !tocVisible;
     localStorage.setItem('toc-visible', tocVisible);
     
-    if (tocVisible) {
-      tocSidebar.style.display = 'block';
-      setTimeout(() => {
-        tocSidebar.style.opacity = '1';
-        tocSidebar.style.transform = 'translateX(0)';
-      }, 10);
-    }
-    
     applyTocState();
-    
-    // Add visual feedback
-    tocToggle.style.transform = 'scale(0.9)';
-    setTimeout(() => {
-      tocToggle.style.transform = 'scale(1)';
-    }, 150);
   });
   
-  // Close TOC when clicking outside
-  document.addEventListener('click', function(e) {
-    if (tocVisible && !tocSidebar.contains(e.target) && !tocToggle.contains(e.target)) {
-      // Don't auto-close, let user control it manually
-    }
-  });
-  
-  // Generate TOC content
-  if (headings.length > 0 && tocContainer) {
-    let tocHTML = '<ul style="list-style: none; padding: 0; margin: 0;">';
+  // Function to generate TOC content
+  function generateTOC() {
+    const allHeadings = document.querySelectorAll('.content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4, .content-wrapper h5, .content-wrapper h6');
     
-    headings.forEach((heading, index) => {
-      const id = heading.id || `heading-${index}`;
-      heading.id = id;
+    // Filter headings to only include visible ones (for multilingual support)
+    const currentHeadings = Array.from(allHeadings).filter(heading => {
+      const style = window.getComputedStyle(heading);
+      const parentStyle = heading.parentElement ? window.getComputedStyle(heading.parentElement) : null;
       
-      const level = parseInt(heading.tagName.substring(1));
-      const indent = Math.max(0, (level - 2)) * 0.8;
+      const isVisible = style.display !== 'none' && 
+                       (!parentStyle || parentStyle.display !== 'none') &&
+                       heading.offsetHeight > 0 && 
+                       heading.offsetWidth > 0 &&
+                       parseFloat(style.opacity) > 0.1;
       
-      tocHTML += `
-        <li style="margin-bottom: 0.4rem; padding-left: ${indent}rem;">
-          <a href="#${id}" style="color: #8B1538; text-decoration: none; font-size: 0.85rem; line-height: 1.4; display: block; padding: 0.3rem 0.5rem; transition: all 0.2s ease; border-radius: 4px;">
-            ${heading.textContent.trim()}
-          </a>
-        </li>
-      `;
+      return isVisible;
     });
     
-    tocHTML += '</ul>';
-    tocContainer.innerHTML = tocHTML;
-    
-    // Add smooth scrolling and hover effects
-    tocContainer.querySelectorAll('a').forEach(link => {
+    if (currentHeadings.length > 0 && tocContainer) {
+      let tocHTML = '<ul style="list-style: none; padding: 0; margin: 0;">';
+      
+      currentHeadings.forEach((heading, index) => {
+        const id = heading.id || `heading-${index}`;
+        heading.id = id;
+        
+        const level = parseInt(heading.tagName.substring(1));
+        const indent = Math.max(0, (level - 2)) * 0.7;
+        
+        tocHTML += `
+          <li style="margin-bottom: 0.2rem; padding-left: ${indent}rem;">
+            <a href="#${id}" class="toc-link" style="color: #8B1538; text-decoration: none; font-size: 0.8rem; line-height: 1.2; display: block; padding: 0.3rem 0.4rem; transition: all 0.15s ease; border-radius: 3px;">
+              ${heading.textContent.trim()}
+            </a>
+          </li>
+        `;
+      });
+      
+      tocHTML += '</ul>';
+      tocContainer.innerHTML = tocHTML;
+      
+      // Add event listeners to TOC links
+      addTOCEventListeners();
+      
+      // Highlight active section on scroll
+      setupActiveHeadingTracking();
+      
+      // Apply initial TOC state
+      applyTocState();
+      
+    } else if (tocContainer) {
+      tocContainer.innerHTML = '<p style="color: #8B7B7E; font-size: 0.8rem; text-align: center; margin: 0; padding: 0.5rem;">No headings found</p>';
+      // Hide TOC if no headings
+      tocSidebar.style.display = 'none';
+      tocToggle.style.display = 'none';
+    }
+  }
+  
+  // Function to add event listeners to TOC links
+  function addTOCEventListeners() {
+    tocContainer.querySelectorAll('a.toc-link').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
@@ -376,21 +570,39 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       
       link.addEventListener('mouseenter', function() {
-        this.style.background = '#F8E8EC';
-        this.style.color = '#B91C4D';
+        if (!this.classList.contains('active')) {
+          this.style.background = 'rgba(248, 232, 236, 0.5)';
+          this.style.color = '#B91C4D';
+        }
       });
       
       link.addEventListener('mouseleave', function() {
-        this.style.background = 'transparent';
-        this.style.color = '#8B1538';
+        if (!this.classList.contains('active')) {
+          this.style.background = 'transparent';
+          this.style.color = '#8B1538';
+          this.style.fontWeight = 'normal';
+        }
       });
     });
-
-    // Highlight active section on scroll
+  }
+  
+  // Function to setup active heading tracking
+  function setupActiveHeadingTracking() {
     let currentActive = null;
     function updateActiveHeading() {
       let current = null;
-      headings.forEach(heading => {
+      // Get currently visible headings
+      const visibleHeadings = Array.from(document.querySelectorAll('.content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4, .content-wrapper h5, .content-wrapper h6')).filter(heading => {
+        const style = window.getComputedStyle(heading);
+        const parentStyle = heading.parentElement ? window.getComputedStyle(heading.parentElement) : null;
+        return style.display !== 'none' && 
+               (!parentStyle || parentStyle.display !== 'none') &&
+               heading.offsetHeight > 0 && 
+               heading.offsetWidth > 0 &&
+               parseFloat(style.opacity) > 0.1;
+      });
+      
+      visibleHeadings.forEach(heading => {
         const rect = heading.getBoundingClientRect();
         if (rect.top <= 100) {
           current = heading;
@@ -402,8 +614,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentActive) {
           const prevLink = tocContainer.querySelector(`a[href="#${currentActive.id}"]`);
           if (prevLink) {
+            prevLink.classList.remove('active');
             prevLink.style.background = 'transparent';
-            prevLink.style.fontWeight = '400';
+            prevLink.style.fontWeight = 'normal';
+            prevLink.style.color = '#8B1538';
           }
         }
         
@@ -411,8 +625,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (current) {
           const activeLink = tocContainer.querySelector(`a[href="#${current.id}"]`);
           if (activeLink) {
-            activeLink.style.background = '#F8E8EC';
-            activeLink.style.fontWeight = '600';
+            activeLink.classList.add('active');
+            activeLink.style.background = 'rgba(248, 232, 236, 0.7)';
+            activeLink.style.fontWeight = 'bold';
+            activeLink.style.color = '#8B1538';
           }
         }
         
@@ -420,19 +636,22 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    window.addEventListener('scroll', updateActiveHeading);
+    // Throttled scroll handler
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveHeading, 50);
+    });
     updateActiveHeading();
-    
-    // Apply initial TOC state
-    applyTocState();
-    
-  } else if (tocContainer) {
-    // Hide TOC if no headings
-    tocSidebar.style.display = 'none';
-    tocToggle.style.display = 'none';
   }
 
-  // Adjust TOC position to avoid sticky header overlap
+  // Generate initial TOC
+  generateTOC();
+  
+  // Make generateTOC globally available for multilingual support
+  window.generateTOC = generateTOC;
+
+  // Enhanced positioning function
   function adjustTocPosition() {
     if (tocSidebar) {
       const header = document.querySelector('.site-header');
@@ -500,7 +719,7 @@ function copyPostLink() {
 </script>
 
 <style>
-/* Post-specific styles */
+/* Enhanced Post-specific styles */
 .post-content img {
   max-width: 100%;
   height: auto;
@@ -510,6 +729,12 @@ function copyPostLink() {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-content img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 21, 56, 0.2);
 }
 
 .post-content img.emoji {
@@ -522,51 +747,51 @@ function copyPostLink() {
   vertical-align: -0.2em !important;
   display: inline-block !important;
   background: transparent !important;
+  transform: none !important;
+  transition: none !important;
 }
 
 .post-content blockquote {
   border-left: 4px solid #8B1538;
-  background: #FDF5F7;
+  background: linear-gradient(135deg, #FDF5F7 0%, #FEFCFD 100%);
   padding: 1.5rem 2rem;
   margin: 2rem 0;
   font-style: italic;
-  border-radius: 0 6px 6px 0;
+  border-radius: 0 8px 8px 0;
   position: relative;
+  box-shadow: 0 2px 8px rgba(139, 21, 56, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+
+.post-content blockquote:hover {
+  border-left-color: #B91C4D;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 21, 56, 0.12);
 }
 
 .post-content blockquote::before {
   content: '"';
   font-size: 3rem;
-  color: #8B1538;
+  color: rgba(139, 21, 56, 0.3);
   position: absolute;
   top: -0.5rem;
   left: 1rem;
-  font-family: serif;
+  font-family: 'Crimson Pro', serif;
+  font-weight: 700;
 }
 
+/* Code styling inherits from global styles in custom-head.html */
 .post-content pre {
-  background: #FDF5F7;
-  border: 1px solid #E8D4D8;
-  border-radius: 6px;
-  padding: 1.5rem;
-  overflow-x: auto;
-  margin: 2rem 0;
-  box-shadow: 0 2px 8px rgba(139, 21, 56, 0.1);
+  /* Global pre styles apply */
 }
 
-.post-content code {
-  background: #F8E8EC;
-  color: #8B1538;
-  padding: 0.2rem 0.4rem;
-  border-radius: 3px;
-  font-size: 0.9em;
-  font-family: 'JetBrains Mono', monospace;
+.post-content code:not(pre code) {
+  /* Global inline code styles apply */
 }
 
 .post-content pre code {
-  background: none;
-  color: inherit;
-  padding: 0;
+  /* Global pre code styles apply */
 }
 
 .post-content table {
@@ -591,45 +816,38 @@ function copyPostLink() {
   font-weight: 600;
 }
 
-.tag-link:hover {
+.tag:hover {
   background: #8B1538 !important;
   color: white !important;
   transform: translateY(-1px);
 }
 
-.related-posts article:hover {
-  border-left-color: #8B1538;
-  transform: translateX(5px);
+/* Language Switcher Button Styles */
+.lang-btn {
+  background: transparent !important;
+  color: #8B7B7E !important;
+  border: 1px solid #E8D4D8 !important;
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 3px !important;
+  font-size: 0.75rem !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.related-posts article:hover h4 a {
-  color: #B91C4D;
+.lang-btn[data-active="true"] {
+  background: #8B1538 !important;
+  color: white !important;
+  border-color: #8B1538 !important;
 }
 
-.related-posts article:hover a span {
-  transform: translateX(3px);
-}
-
-.post-navigation a:hover {
-  border-left-color: #B91C4D;
-  border-right-color: #B91C4D;
-  transform: translateX(5px);
-}
-
-.post-sharing-compact a:hover,
-.post-sharing-compact button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Floating TOC Styles */
+/* Simplified Floating TOC Styles */
 .floating-toc {
   scrollbar-width: thin;
   scrollbar-color: #E8D4D8 transparent;
 }
 
 .floating-toc::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .floating-toc::-webkit-scrollbar-track {
@@ -638,22 +856,49 @@ function copyPostLink() {
 
 .floating-toc::-webkit-scrollbar-thumb {
   background: #E8D4D8;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .floating-toc::-webkit-scrollbar-thumb:hover {
   background: #8B1538;
 }
 
-/* TOC Toggle Button Styles */
-.toc-toggle-btn:hover {
-  background: #B91C4D !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(139, 21, 56, 0.4);
+/* Simplified TOC Toggle Button Styles */
+.toc-toggle-btn {
+  transition: all 0.2s ease !important;
 }
 
-.toc-toggle-btn:active {
-  transform: scale(0.95);
+.toc-toggle-btn:hover {
+  background: #B91C4D !important;
+  transform: translateY(-2px);
+}
+
+
+
+/* Enhanced hover effects for related pages and navigation */
+.related-posts article:hover {
+  border-left-color: #8B1538;
+  transform: translateY(-2px);
+}
+
+.related-posts article:hover h4 a {
+  color: #B91C4D;
+}
+
+.related-posts article:hover a span {
+  transform: translateX(2px);
+}
+
+.post-navigation a:hover {
+  border-left-color: #B91C4D;
+  border-right-color: #B91C4D;
+  transform: translateY(-2px);
+}
+
+.post-sharing-compact a:hover,
+.post-sharing-compact button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive adjustments for floating TOC */
@@ -679,6 +924,8 @@ function copyPostLink() {
   .toc-toggle-btn {
     right: 1rem !important;
     top: 60% !important;
+    width: 44px !important;
+    height: 44px !important;
   }
 }
 

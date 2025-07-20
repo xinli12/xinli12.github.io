@@ -4,7 +4,7 @@ title: Blog
 permalink: /blog/
 ---
 
-<div class="blog-header" style="text-align: center; margin-bottom: 3rem; padding: 2rem 0;">
+<div class="blog-header animate-on-scroll" style="text-align: center; margin-bottom: 3rem; padding: 2rem 0;">
   <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #8B1538; font-weight: 700;">
     Thoughts & Research
   </h1>
@@ -14,7 +14,7 @@ permalink: /blog/
   </p>
 </div>
 
-<div class="blog-intro" style="margin-bottom: 3rem; text-align: center;">
+<div class="blog-intro animate-on-scroll" style="margin-bottom: 3rem; text-align: center;">
   <p style="font-size: 1.1rem; line-height: 1.6; color: #5A4A4E; max-width: 700px; margin: 0 auto;">
     Welcome to my digital notebook. Here you'll find my thoughts on anything.
   </p>
@@ -23,12 +23,12 @@ permalink: /blog/
 {% if site.posts.size > 0 %}
 <div class="posts-grid" style="display: grid; gap: 1rem;">
   {% for post in site.posts %}
-  <article class="post-card" style="padding: 2rem; border-left: 3px solid #8B1538; background: #FDF5F7; transition: all 0.2s ease;">
+  <article class="post-card hover-card no-animation" style="padding: 2rem; border-left: 3px solid #8B1538; background: #FDF5F7;">
     
     <div>
       <!-- Post metadata -->
       <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-        <span style="background: #8B1538; color: white; padding: 0.3rem 0.85rem; border-radius: 2px; font-size: 0.8rem; font-weight: 500;">
+        <span class="tag" style="background: #8B1538; color: white;">
           {{ post.date | date: "%B %d, %Y" }}
         </span>
         
@@ -43,19 +43,28 @@ permalink: /blog/
           <span class="tag">#{{ tag }}</span>
           {% endfor %}
         {% endif %}
+        
+        <!-- Multilingual indicator -->
+        {% if post.multilingual and post.languages.size > 1 %}
+        <span class="tag" style="background: #F8E8EC; color: #8B1538;">
+          🌐 {{ post.languages.size }} languages
+        </span>
+        {% endif %}
       </div>
 
-      <!-- Post title -->
-      <h2 style="margin: 0 0 1rem 0; font-size: 1.5rem; font-weight: 600; line-height: 1.3;">
-        <a href="{{ post.url }}" style="text-decoration: none; color: #8B1538;">
+      <!-- Post title (will be dynamically updated for multilingual posts) -->
+      <h2 style="margin: 0 0 1rem 0; font-size: 1.5rem; font-weight: 600; line-height: 1.3;"
+          {% if post.multilingual %}class="dynamic-post-title" data-post-languages="{{ post.languages | jsonify | escape }}" data-default-title="{{ post.title | escape }}"{% endif %}>
+        <a href="{{ post.url }}" style="text-decoration: none; color: #8B1538; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
           {{ post.title }}
         </a>
       </h2>
 
-      <!-- Post excerpt -->
+      <!-- Post excerpt (will be dynamically updated for multilingual posts) -->
       {% if post.excerpt %}
       <div style="margin-bottom: 1.5rem;">
-        <p style="color: #5A4A4E; line-height: 1.5; font-size: 1rem; margin: 0;">
+        <p style="color: #5A4A4E; line-height: 1.5; font-size: 1rem; margin: 0;"
+           {% if post.multilingual %}class="dynamic-post-excerpt" data-post-languages="{{ post.languages | jsonify | escape }}" data-default-excerpt="{{ post.excerpt | strip_html | escape }}"{% endif %}>
           {{ post.excerpt | strip_html | truncatewords: 35 }}...
         </p>
       </div>
@@ -70,7 +79,7 @@ permalink: /blog/
           {% endif %}
         </div>
         
-        <a href="{{ post.url }}" class="elegant-button" style="font-size: 0.9rem; padding: 0.5rem 1.25rem;">
+        <a href="{{ post.url }}" class="elegant-button elegant-button-small">
           Read more →
         </a>
       </div>
@@ -80,7 +89,7 @@ permalink: /blog/
 </div>
 
 {% else %}
-<div class="no-posts" style="text-align: center; padding: 3rem 2rem; border-top: 1px solid #E8D4D8; border-bottom: 1px solid #E8D4D8;">
+<div class="no-posts animate-on-scroll" style="text-align: center; padding: 3rem 2rem; border-top: 1px solid #E8D4D8; border-bottom: 1px solid #E8D4D8;">
   <h2 style="color: #5A4A4E; margin-bottom: 1rem; font-size: 1.5rem;">No posts yet 📝</h2>
   <p style="color: #8B7B7E; font-size: 1rem;">
     Content is coming soon! In the meantime, feel free to explore my projects or reach out for a chat.
@@ -93,15 +102,85 @@ permalink: /blog/
 </div>
 {% endif %}
 
+<!-- Multilingual Blog Support Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Always default to English first, then check saved preference
+  let preferredLang = 'en';
+  const savedLang = localStorage.getItem('preferred-lang');
+  if (savedLang) {
+    preferredLang = savedLang;
+  }
+  
+  // Update multilingual post previews
+  const dynamicTitles = document.querySelectorAll('.dynamic-post-title');
+  const dynamicExcerpts = document.querySelectorAll('.dynamic-post-excerpt');
+  
+  dynamicTitles.forEach(titleElement => {
+    try {
+      const languagesAttr = titleElement.getAttribute('data-post-languages');
+      if (!languagesAttr) return;
+      
+      const languages = JSON.parse(languagesAttr);
+      const defaultTitle = titleElement.getAttribute('data-default-title');
+      
+      // Find the preferred language version, defaulting to English
+      let langVersion = languages.find(lang => lang.code === preferredLang);
+      if (!langVersion && preferredLang !== 'en') {
+        langVersion = languages.find(lang => lang.code === 'en');
+      }
+      
+      if (langVersion && langVersion.title) {
+        const linkElement = titleElement.querySelector('a');
+        if (linkElement) {
+          linkElement.textContent = langVersion.title;
+        }
+      }
+    } catch (e) {
+      console.log('Error parsing language data for title:', e);
+    }
+  });
+  
+  dynamicExcerpts.forEach(excerptElement => {
+    try {
+      const languagesAttr = excerptElement.getAttribute('data-post-languages');
+      if (!languagesAttr) return;
+      
+      const languages = JSON.parse(languagesAttr);
+      const defaultExcerpt = excerptElement.getAttribute('data-default-excerpt');
+      
+      // Find the preferred language version, defaulting to English
+      let langVersion = languages.find(lang => lang.code === preferredLang);
+      if (!langVersion && preferredLang !== 'en') {
+        langVersion = languages.find(lang => lang.code === 'en');
+      }
+      
+      if (langVersion && langVersion.excerpt) {
+        excerptElement.textContent = langVersion.excerpt + '...';
+      }
+    } catch (e) {
+      console.log('Error parsing language data for excerpt:', e);
+    }
+  });
+});
+</script>
+
 <style>
+.post-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .post-card:hover {
   border-left-color: #B91C4D;
-  transform: translateX(5px);
-  transition: all 0.2s ease;
+  transform: translateY(-2px);
 }
 
 .post-card:hover h2 a {
   color: #B91C4D;
+}
+
+.post-card h2 a:hover {
+  transform: translateY(-0.5px);
 }
 
 @media (max-width: 768px) {
@@ -121,6 +200,11 @@ permalink: /blog/
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+  }
+  
+  .elegant-button {
+    width: 100%;
+    justify-content: center;
   }
 }
 </style> 

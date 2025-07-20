@@ -43,15 +43,9 @@
 
 <body class="{% if page.layout %}layout-{{ page.layout }}{% endif %}{% if page.class %} {{ page.class }}{% endif %}">
 
-  <!-- Skip to main content for accessibility -->
-  <a class="skip-link" href="#main-content" style="position: absolute; top: -40px; left: 0; background: #8B1538; color: white; padding: 8px; text-decoration: none; z-index: 1000; transition: top 0.3s ease;" 
-     onfocus="this.style.top='0'" onblur="this.style.top='-40px'">
-    Skip to main content
-  </a>
-
   <!-- Header -->
   <header class="site-header" role="banner" style="position: sticky; top: 0; z-index: 100; background: rgba(254, 252, 253, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #E8D4D8; box-shadow: 0 1px 3px rgba(139, 21, 56, 0.1);">
-    <div class="wrapper" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem;">
+    <div class="wrapper" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1.5rem;">
       
       <!-- Logo/Title -->
       <div class="site-brand">
@@ -72,7 +66,7 @@
         <div class="trigger" style="display: flex; gap: 1.5rem; align-items: center;">
           <!-- Home link -->
           <a class="page-link" href="{{ "/" | relative_url }}" 
-             style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.2s ease;"
+             style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
              {% if page.url == "/" %}aria-current="page"{% endif %}>
             Home
           </a>
@@ -82,7 +76,7 @@
               {%- assign my_page = site.pages | where: "path", path | first -%}
               {%- if my_page.title -%}
               <a class="page-link" href="{{ my_page.url | relative_url }}" 
-                 style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.2s ease;"
+                 style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
                  {% if page.url == my_page.url %}aria-current="page"{% endif %}>
                 {{ my_page.title }}
               </a>
@@ -93,7 +87,7 @@
             {%- for my_page in sorted_pages -%}
               {%- if my_page.title and my_page.url != "/" -%}
               <a class="page-link" href="{{ my_page.url | relative_url }}" 
-                 style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.2s ease;"
+                 style="color: #5A4A4E; font-weight: 500; text-decoration: none; padding: 0.5rem 0; position: relative; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
                  {% if page.url == my_page.url %}aria-current="page"{% endif %}>
                 {{ my_page.title }}
               </a>
@@ -173,23 +167,100 @@
       const navLinks = document.querySelectorAll('.page-link');
       
       navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath || 
-            (currentPath === '/' && link.getAttribute('href') === '/')) {
+        const linkPath = link.getAttribute('href');
+        const isCurrentPage = linkPath === currentPath || 
+                            (currentPath === '/' && linkPath === '/') ||
+                            (currentPath.endsWith('/') && linkPath === currentPath.slice(0, -1)) ||
+                            (linkPath.endsWith('/') && currentPath === linkPath.slice(0, -1));
+        
+        if (isCurrentPage) {
           link.style.color = '#8B1538';
           link.style.fontWeight = '600';
+          
+          // Add permanent underline for current page
+          const permanentUnderline = document.createElement('div');
+          permanentUnderline.className = 'nav-underline nav-underline-active';
+          permanentUnderline.style.cssText = `
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #8B1538, #B91C4D);
+            transform: translateX(-50%);
+            border-radius: 1px;
+            opacity: 0.8;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          `;
+          link.appendChild(permanentUnderline);
         }
         
-        // Hover effects
+        // Enhanced hover effects with smooth underline animation
         link.addEventListener('mouseenter', function() {
           this.style.color = '#8B1538';
           this.style.transform = 'translateY(-1px)';
+          
+          // Don't add hover underline if this is the current page (already has permanent underline)
+          if (this.hasAttribute('aria-current')) {
+            // Just make the permanent underline brighter on hover
+            const permanentUnderline = this.querySelector('.nav-underline-active');
+            if (permanentUnderline) {
+              permanentUnderline.style.opacity = '1';
+              permanentUnderline.style.height = '3px';
+            }
+            return;
+          }
+          
+          // Add hover underline animation for non-current pages
+          const underline = this.querySelector('.nav-underline:not(.nav-underline-active)') || document.createElement('div');
+          if (!this.querySelector('.nav-underline:not(.nav-underline-active)')) {
+            underline.className = 'nav-underline';
+            underline.style.cssText = `
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              width: 0;
+              height: 2px;
+              background: linear-gradient(90deg, #8B1538, #B91C4D);
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              transform: translateX(-50%);
+              border-radius: 1px;
+            `;
+            this.appendChild(underline);
+          }
+          
+          // Animate underline
+          requestAnimationFrame(() => {
+            underline.style.width = '100%';
+          });
         });
         
         link.addEventListener('mouseleave', function() {
-          if (!this.hasAttribute('aria-current')) {
-            this.style.color = '#5A4A4E';
-          }
           this.style.transform = 'translateY(0)';
+          
+          if (this.hasAttribute('aria-current')) {
+            // Reset permanent underline to normal state
+            const permanentUnderline = this.querySelector('.nav-underline-active');
+            if (permanentUnderline) {
+              permanentUnderline.style.opacity = '0.8';
+              permanentUnderline.style.height = '2px';
+            }
+          } else {
+            // Change color back for non-current pages
+            this.style.color = '#5A4A4E';
+            
+            // Animate hover underline out
+            const hoverUnderline = this.querySelector('.nav-underline:not(.nav-underline-active)');
+            if (hoverUnderline) {
+              hoverUnderline.style.width = '0';
+              // Remove underline after animation completes
+              setTimeout(() => {
+                if (hoverUnderline.parentNode && hoverUnderline.style.width === '0px') {
+                  hoverUnderline.remove();
+                }
+              }, 300);
+            }
+          }
         });
       });
       
@@ -207,6 +278,23 @@
     /* Base navigation styles */
     .site-nav {
       position: relative;
+    }
+    
+    /* Enhanced navigation link styles */
+    .page-link {
+      position: relative;
+      overflow: visible;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    /* Underline animation improvements */
+    .nav-underline {
+      z-index: 1;
+      box-shadow: 0 1px 3px rgba(139, 21, 56, 0.2);
+    }
+    
+    .nav-underline-active {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     
     .nav-trigger {
@@ -269,7 +357,7 @@
     
     @media (max-width: 768px) {
       .site-header .wrapper {
-        padding: 0.5rem 1rem;
+        padding: 0.4rem 1rem;
       }
       
       .menu-icon {
@@ -308,11 +396,24 @@
       .trigger.mobile-menu-open {
         visibility: visible;
       }
+      
+      /* Mobile navigation link styles */
+      .trigger.mobile-menu-open .page-link {
+        margin: 0.25rem 0;
+        padding: 0.75rem 1rem;
+        border-radius: 4px;
+        display: block;
+        text-align: center;
+      }
+      
+      .trigger.mobile-menu-open .nav-underline {
+        bottom: 0.75rem;
+      }
     }
     
     @media (max-width: 480px) {
       .site-header .wrapper {
-        padding: 0.5rem 0.75rem;
+        padding: 0.4rem 0.75rem;
       }
       
       .page-content .wrapper {

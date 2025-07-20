@@ -2,31 +2,33 @@
 layout: default
 ---
 
-<article class="page" itemscope itemtype="http://schema.org/WebPage">
-  
+<article class="page animate-on-scroll" itemscope itemtype="http://schema.org/WebPage">
   <!-- Page Content -->
   <div class="page-content" itemprop="text">
     
     <!-- Table of Contents (if enabled) -->
     {% if page.toc %}
-    <div class="table-of-contents" style="background: #FDF5F7; border-left: 3px solid #8B1538; padding: 1.5rem; margin-bottom: 2rem; border-radius: 0 4px 4px 0;">
-      <h3 style="margin: 0 0 1rem 0; color: #8B1538; font-size: 1.1rem; font-weight: 600;">📋 Table of Contents</h3>
-      <div id="toc" style="font-size: 0.9rem; line-height: 1.6;"></div>
+    <div class="table-of-contents" style="background: #FDF5F7; border-left: 3px solid #8B1538; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 4px 4px 0;">
+      <h3 style="margin: 0 0 0.75rem 0; color: #8B1538; font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;" onclick="toggleTOC()">
+        📋 Table of Contents
+        <div class="toc-expand-indicator" style="margin-left: auto; width: 10px; height: 10px; border-left: 2px solid #8B1538; border-bottom: 2px solid #8B1538; transform: rotate(-45deg); transition: transform 0.2s ease;"></div>
+      </h3>
+      <div id="toc" style="font-size: 0.85rem; line-height: 1.4; transition: all 0.2s ease, opacity 0.2s ease; overflow: hidden;"></div>
     </div>
     {% endif %}
     
     <!-- Main Content -->
-    <div class="content-wrapper" style="line-height: 1.7; color: #2D1B20;">
+    <div class="content-wrapper no-animation" style="line-height: 1.7; color: #2D1B20;">
       {{ content }}
     </div>
     
     <!-- Page Tags (if available) -->
     {% if page.tags and page.tags.size > 0 %}
-    <div class="page-tags" style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #E8D4D8;">
+    <div class="page-tags animate-on-scroll" style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #E8D4D8;">
       <h3 style="margin: 0 0 1rem 0; color: #8B1538; font-size: 1rem; font-weight: 600;">🏷️ Tags</h3>
       <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
         {% for tag in page.tags %}
-        <span class="tag" style="display: inline-block; padding: 0.25rem 0.75rem; background: #F8E8EC; color: #8B1538; border-radius: 2px; font-size: 0.8rem; font-weight: 500;">
+        <span class="tag">
           #{{ tag }}
         </span>
         {% endfor %}
@@ -36,13 +38,13 @@ layout: default
     
     <!-- Related Pages (if configured) -->
     {% if page.related and page.related.size > 0 %}
-    <div class="related-pages" style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #E8D4D8;">
+    <div class="related-pages animate-on-scroll" style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #E8D4D8;">
       <h3 style="margin: 0 0 1.5rem 0; color: #8B1538; font-size: 1.2rem; font-weight: 600;">🔗 Related Pages</h3>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
         {% for related_page_url in page.related %}
           {% assign related_page = site.pages | where: "url", related_page_url | first %}
           {% if related_page %}
-          <div style="padding: 1.25rem; border-left: 3px solid #B91C4D; background: #FDF5F7; transition: all 0.2s ease;">
+          <div class="hover-card" style="padding: 1.25rem; border-left: 3px solid #B91C4D; background: #FDF5F7;">
             <h4 style="margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600;">
               <a href="{{ related_page.url | relative_url }}" style="color: #8B1538; text-decoration: none;">
                 {{ related_page.title }}
@@ -63,7 +65,7 @@ layout: default
   </div>
 
   <!-- Page Footer Actions -->
-  <footer class="page-footer" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #E8D4D8; text-align: center;">
+  <footer class="page-footer animate-on-scroll" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #E8D4D8; text-align: center;">
     
     <!-- Social Sharing (if enabled) -->
     {% if page.share != false and site.features.sharing %}
@@ -72,12 +74,14 @@ layout: default
       <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
         <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}" 
            target="_blank" rel="noopener" 
-           style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #1DA1F2; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85rem; transition: all 0.2s ease;">
+           class="social-share-btn"
+           style="background: #1DA1F2;">
           🐦 Twitter
         </a>
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}" 
            target="_blank" rel="noopener"
-           style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #0077B5; color: white; text-decoration: none; border-radius: 4px; font-size: 0.85rem; transition: all 0.2s ease;">
+           class="social-share-btn"
+           style="background: #0077B5;">
           💼 LinkedIn
         </a>
       </div>
@@ -87,11 +91,11 @@ layout: default
     <!-- Back Navigation (skip for homepage) -->
     {% unless page.url == "/" %}
     <div class="page-navigation" style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-      <a href="/" class="elegant-button" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #8B1538, #B91C4D); color: white; text-decoration: none; border-radius: 2px; font-weight: 500; font-size: 0.9rem; transition: all 0.3s ease;">
+      <a href="/" class="elegant-button">
         ← Back to Home
       </a>
       {% if page.parent %}
-      <a href="{{ page.parent | relative_url }}" class="elegant-button" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: transparent; color: #8B1538; text-decoration: none; border: 1px solid #8B1538; border-radius: 2px; font-weight: 500; font-size: 0.9rem; transition: all 0.3s ease;">
+      <a href="{{ page.parent | relative_url }}" class="elegant-button-secondary">
         ↑ Back to {{ page.parent_title | default: "Parent" }}
       </a>
       {% endif %}
@@ -117,6 +121,42 @@ layout: default
 <!-- Table of Contents Generator Script -->
 {% if page.toc %}
 <script>
+let tocCollapsed = false;
+
+function toggleTOC() {
+  const tocContainer = document.getElementById('toc');
+  const tocIndicator = document.querySelector('.toc-expand-indicator');
+  
+  if (tocCollapsed) {
+    // Expanding - smooth fade in
+    tocContainer.style.opacity = '0';
+    tocContainer.style.maxHeight = '500px'; // Set a reasonable max height
+    tocContainer.style.height = 'auto';
+    tocIndicator.style.transform = 'rotate(-45deg)';
+    
+    // Fade in with slight delay
+    setTimeout(() => {
+      tocContainer.style.opacity = '1';
+    }, 50);
+    
+    tocCollapsed = false;
+  } else {
+    // Collapsing - smooth fade out
+    tocContainer.style.opacity = '0';
+    tocIndicator.style.transform = 'rotate(135deg)';
+    
+    // Set height to 0 after fade out completes
+    setTimeout(() => {
+      if (tocCollapsed) { // Only if still collapsed (prevent race condition)
+        tocContainer.style.height = '0';
+        tocContainer.style.maxHeight = '0';
+      }
+    }, 200); // Match the transition duration
+    
+    tocCollapsed = true;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const tocContainer = document.getElementById('toc');
   const headings = document.querySelectorAll('.content-wrapper h2, .content-wrapper h3, .content-wrapper h4');
@@ -129,11 +169,11 @@ document.addEventListener('DOMContentLoaded', function() {
       heading.id = id;
       
       const level = parseInt(heading.tagName.substring(1));
-      const indent = (level - 2) * 1.2; // Indent sub-headings
+      const indent = (level - 2) * 0.8; // More compact indentation
       
       tocHTML += `
-        <li style="margin-bottom: 0.5rem; padding-left: ${indent}rem;">
-          <a href="#${id}" style="color: #8B1538; text-decoration: none; font-size: 0.9rem; line-height: 1.4; display: block; padding: 0.25rem 0; transition: all 0.2s ease;">
+        <li style="margin-bottom: 0.3rem; padding-left: ${indent}rem;">
+          <a href="#${id}" class="toc-link" style="color: #8B1538; text-decoration: none; font-size: 0.85rem; line-height: 1.3; display: block; padding: 0.25rem 0.5rem; transition: all 0.15s ease; border-radius: 3px;">
             ${heading.textContent}
           </a>
         </li>
@@ -143,8 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
     tocHTML += '</ul>';
     tocContainer.innerHTML = tocHTML;
     
-    // Add smooth scrolling and active states
-    tocContainer.querySelectorAll('a').forEach(link => {
+    // Add event listeners
+    tocContainer.querySelectorAll('a.toc-link').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
@@ -155,19 +195,63 @@ document.addEventListener('DOMContentLoaded', function() {
       
       link.addEventListener('mouseenter', function() {
         this.style.color = '#B91C4D';
-        this.style.paddingLeft = '0.5rem';
+        this.style.background = 'rgba(248, 232, 236, 0.5)';
       });
       
       link.addEventListener('mouseleave', function() {
-        this.style.color = '#8B1538';
-        this.style.paddingLeft = '0';
+        if (!this.classList.contains('active')) {
+          this.style.color = '#8B1538';
+          this.style.background = 'transparent';
+          this.style.fontWeight = 'normal';
+        }
       });
     });
+    
+    // Track active heading
+    function updateActiveHeading() {
+      let current = null;
+      headings.forEach(heading => {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top <= 100) {
+          current = heading;
+        }
+      });
+      
+      // Remove previous active
+      tocContainer.querySelectorAll('.toc-link').forEach(link => {
+        link.classList.remove('active');
+        link.style.color = '#8B1538';
+        link.style.background = 'transparent';
+        link.style.fontWeight = 'normal';
+      });
+      
+      // Set new active
+      if (current) {
+        const activeLink = tocContainer.querySelector(`a[href="#${current.id}"]`);
+        if (activeLink) {
+          activeLink.classList.add('active');
+          activeLink.style.color = '#8B1538';
+          activeLink.style.background = 'rgba(248, 232, 236, 0.7)';
+          activeLink.style.fontWeight = 'bold';
+        }
+      }
+    }
+    
+    // Throttled scroll handler
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveHeading, 50);
+    });
+    updateActiveHeading();
+    
   } else if (tocContainer) {
     tocContainer.parentElement.style.display = 'none';
   }
 });
 </script>
+
+
 {% endif %}
 
 <style>
@@ -175,9 +259,15 @@ document.addEventListener('DOMContentLoaded', function() {
 .page-content img {
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(139, 21, 56, 0.1);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(139, 21, 56, 0.15);
   margin: 1.5rem 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-content img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 21, 56, 0.2);
 }
 
 .page-content img.emoji {
@@ -190,31 +280,53 @@ document.addEventListener('DOMContentLoaded', function() {
   vertical-align: -0.2em !important;
   display: inline-block !important;
   background: transparent !important;
+  transform: none !important;
+  transition: none !important;
 }
 
 .page-content blockquote {
-  border-left: 3px solid #8B1538;
-  background: #FDF5F7;
-  padding: 1.5rem;
+  border-left: 4px solid #8B1538;
+  background: linear-gradient(135deg, #FDF5F7 0%, #FEFCFD 100%);
+  padding: 1.5rem 2rem;
   margin: 1.5rem 0;
   font-style: italic;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 8px rgba(139, 21, 56, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Crimson Pro', Georgia, serif;
 }
 
+.page-content blockquote:hover {
+  border-left-color: #B91C4D;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 21, 56, 0.12);
+}
+
+/* Code styling inherits from global styles in custom-head.html */
 .page-content pre {
-  background: #FDF5F7;
-  border: 1px solid #E8D4D8;
-  border-radius: 4px;
-  padding: 1.5rem;
-  overflow-x: auto;
-  margin: 1.5rem 0;
+  /* Global pre styles apply */
+}
+
+.page-content code:not(pre code) {
+  /* Global inline code styles apply */
+}
+
+.page-content pre code {
+  /* Global pre code styles apply */
 }
 
 .page-content table {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
-  box-shadow: 0 1px 4px rgba(139, 21, 56, 0.1);
+  box-shadow: 0 2px 8px rgba(139, 21, 56, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-content table:hover {
+  box-shadow: 0 4px 16px rgba(139, 21, 56, 0.15);
 }
 
 .page-content table th,
@@ -222,12 +334,22 @@ document.addEventListener('DOMContentLoaded', function() {
   padding: 0.75rem;
   text-align: left;
   border-bottom: 1px solid #E8D4D8;
+  transition: all 0.2s ease;
 }
 
 .page-content table th {
   background: #F8E8EC;
   color: #8B1538;
   font-weight: 600;
+}
+
+.page-content table tr:hover {
+  background: rgba(248, 232, 236, 0.5);
+}
+
+/* Enhanced hover effects for related pages */
+.related-pages .hover-card:hover h4 a {
+  color: #B91C4D;
 }
 
 /* Responsive adjustments */
@@ -247,21 +369,23 @@ document.addEventListener('DOMContentLoaded', function() {
   .page-navigation {
     flex-direction: column;
     align-items: center;
+    gap: 0.75rem !important;
   }
   
   .table-of-contents {
     padding: 1rem !important;
+  }
+  
+  .elegant-button,
+  .elegant-button-secondary {
+    width: 100%;
+    justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
   .page-title {
     font-size: 1.75rem !important;
-  }
-  
-  .elegant-button {
-    width: 100%;
-    justify-content: center;
   }
 }
 </style> 
