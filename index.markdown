@@ -8,7 +8,7 @@ layout: page
   </h1>
   <div style="width: 60px; height: 2px; background: linear-gradient(90deg, #8B1538, #B91C4D); margin: 1rem auto;"></div>
   <p class="lead" style="font-size: 1.25rem; color: #5A4A4E; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-    Welcome to my personal page! I'm a physics grad working at the intersection of physics and machine learning, bringing data-driven approaches into the physical sciences.
+    Welcome to my personal page! I’m a physics graduate with a passion for data-driven exploration.
   </p>
   <p style="font-size: 1rem; color: #2D1B20; max-width: 900px; margin: 0 auto; line-height: 1.6;">
     I'm curious about what our universe holds and what the future brings, and I'm passionate about building models—particularly those interpretable by humans—to <strong style="color: #8B1538;">explore, understand, and predict</strong> the phenomena around us.
