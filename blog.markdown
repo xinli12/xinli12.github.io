@@ -23,6 +23,7 @@ permalink: /blog/
 {% if site.posts.size > 0 %}
 <div class="posts-grid" style="display: grid; gap: 1rem;">
   {% for post in site.posts %}
+  {% unless post.path contains '.ipynb' and post.url contains '.ipynb.html' %}
   <article class="post-card hover-card no-animation" style="padding: 2rem; border-left: 3px solid #8B1538; background: #FDF5F7;">
     
     <div>
@@ -60,20 +61,10 @@ permalink: /blog/
         </a>
       </h2>
 
-      <!-- Post excerpt (will be dynamically updated for multilingual posts) -->
-      {% if post.excerpt %}
-      <div style="margin-bottom: 1.5rem;">
-        <p style="color: #5A4A4E; line-height: 1.5; font-size: 1rem; margin: 0;"
-           {% if post.multilingual %}class="dynamic-post-excerpt" data-post-languages="{{ post.languages | jsonify | escape }}" data-default-excerpt="{{ post.excerpt | strip_html | escape }}"{% endif %}>
-          {{ post.excerpt | strip_html | truncatewords: 35 }}...
-        </p>
-      </div>
-      {% endif %}
-
       <!-- Reading time and read more -->
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
         <div style="color: #8B7B7E; font-size: 0.85rem; display: flex; align-items: center; gap: 1rem;">
-          <span>{{ post.content | number_of_words | divided_by: 200 }} min read</span>
+          {% unless post.path contains '.ipynb' %}<span>{{ post.content | number_of_words | divided_by: 200 }} min read</span>{% endunless %}
           {% if post.comments != false %}
           <span>💬 Comments welcome</span>
           {% endif %}
@@ -85,6 +76,7 @@ permalink: /blog/
       </div>
     </div>
   </article>
+  {% endunless %}
   {% endfor %}
 </div>
 

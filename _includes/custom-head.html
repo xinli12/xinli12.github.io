@@ -195,8 +195,163 @@ window.MathJax = {
     box-shadow: 0 2px 6px rgba(139, 21, 56, 0.12);
   }
   
-  /* Code block styling */
-  pre {
+
+  
+  /* Keep OUTPUT cells with their original styling (including red warnings) */
+  .jp-OutputArea pre,
+  .jp-OutputArea-output pre,
+  .output_area pre,
+  .output_subarea pre,
+  .output_text pre,
+  .output_stream pre,
+  .output_stdout pre,
+  .output_stderr pre,
+  .output_error pre,
+  .jp-RenderedText pre,
+  .jp-OutputArea-child pre,
+  .notebook .output pre,
+  .nboutput pre,
+  .post-content .jp-OutputArea pre,
+  .post-content .output_area pre,
+  .post-content .output_subarea pre {
+    /* No custom styling - preserve original Jupyter output appearance */
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    position: static !important;
+    transition: none !important;
+    line-height: inherit !important;
+    font-size: inherit !important;
+  }
+  
+  /* Keep ALL Jupyter notebook code elements unstyled (both input and output) */
+  .jp-InputArea code,
+  .jp-InputArea pre,
+  .input_area code,
+  .input_area pre,
+  .jp-OutputArea code,
+  .jp-OutputArea-output code,
+  .output_area code,
+  .output_subarea code,
+  .output_text code,
+  .output_stream code,
+  .output_stdout code,
+  .output_stderr code,
+  .output_error code,
+  .post-content .jp-InputArea code,
+  .post-content .input_area code,
+  .post-content .jp-OutputArea code,
+  .post-content .output_area code,
+  .notebook code,
+  .jupyter code,
+  .nbinput code,
+  .nboutput code,
+  .CodeMirror code,
+  .cm-s-jupyter code,
+  .highlight-ipynb code {
+    background: transparent !important;
+    color: inherit !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+  }
+  
+  /* Ensure Jupyter notebook input areas (code cells) are not styled */
+  .jp-InputArea pre,
+  .input_area pre,
+  .notebook .input pre,
+  .jupyter .input pre,
+  .nbinput pre,
+  .CodeMirror pre,
+  .cm-s-jupyter pre,
+  .highlight-ipynb pre,
+  .post-content .jp-InputArea pre,
+  .post-content .input_area pre,
+  .post-content .notebook .input pre,
+  .post-content .jupyter .input pre,
+  .post-content .nbinput pre {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    position: static !important;
+    transition: none !important;
+    line-height: inherit !important;
+    font-size: inherit !important;
+  }
+  
+  /* Preserve error output styling (red backgrounds, etc.) */
+  .jp-OutputArea-output.jp-mod-system-error,
+  .output_stderr,
+  .output_error,
+  .jp-RenderedText[data-mime-type*="error"],
+  [data-mime-type="application/vnd.jupyter.stderr"],
+  .ansi-red-bg,
+  .ansi-red-intense-bg {
+    /* Preserve original styling */
+  }
+  
+  /* FINAL OVERRIDE: Completely reset any custom styling for ALL Jupyter notebook content */
+  .jp-Notebook,
+  .jp-Notebook *,
+  .jupyter-notebook,
+  .jupyter-notebook *,
+  article[data-mime-type*="jupyter"],
+  article[data-mime-type*="jupyter"] *,
+  .post-content .jp-Notebook,
+  .post-content .jp-Notebook *,
+  .post-content .jupyter-notebook,
+  .post-content .jupyter-notebook *,
+  .content-wrapper .jp-Notebook,
+  .content-wrapper .jp-Notebook *,
+  .content-wrapper .jupyter-notebook,
+  .content-wrapper .jupyter-notebook * {
+    /* Reset ALL custom code styling for Jupyter content */
+  }
+  
+  .jp-Notebook pre,
+  .jp-Notebook code,
+  .jupyter-notebook pre,
+  .jupyter-notebook code,
+  article[data-mime-type*="jupyter"] pre,
+  article[data-mime-type*="jupyter"] code,
+  .post-content .jp-Notebook pre,
+  .post-content .jp-Notebook code,
+  .post-content .jupyter-notebook pre,
+  .post-content .jupyter-notebook code,
+  .content-wrapper .jp-Notebook pre,
+  .content-wrapper .jp-Notebook code,
+  .content-wrapper .jupyter-notebook pre,
+  .content-wrapper .jupyter-notebook code {
+    background: initial !important;
+    border: initial !important;
+    border-radius: initial !important;
+    padding: initial !important;
+    margin: initial !important;
+    box-shadow: initial !important;
+    position: initial !important;
+    transition: initial !important;
+    line-height: initial !important;
+    font-size: initial !important;
+    color: initial !important;
+    font-weight: initial !important;
+    transform: initial !important;
+    filter: initial !important;
+  }
+  
+
+  
+  /* Regular Jekyll post code blocks (non-Jupyter) */
+  /* Exclude ALL Jupyter notebook elements from custom styling */
+  pre:not(.jp-InputArea pre):not(.input_area pre):not(.jp-OutputArea pre):not(.output_area pre):not(.jupyter pre):not(.notebook pre):not(.nbinput pre):not(.nboutput pre):not(.highlight-ipynb pre):not(.CodeMirror pre):not(.cm-s-jupyter pre):not(.highlight .codehilite pre):not(.highlight .highlight pre) {
     background: linear-gradient(135deg, #FEFCFD 0%, #FDF5F7 100%) !important;
     border: 1px solid #E8D4D8 !important;
     border-left: 4px solid #8B1538 !important;
@@ -212,7 +367,34 @@ window.MathJax = {
     font-size: 0.9rem;
   }
   
-  pre:hover {
+  pre:not(.jp-InputArea pre):not(.input_area pre):not(.jp-OutputArea pre):not(.output_area pre):not(.jupyter pre):not(.notebook pre):not(.nbinput pre):not(.nboutput pre):not(.highlight-ipynb pre):not(.CodeMirror pre):not(.cm-s-jupyter pre):not(.highlight .codehilite pre):not(.highlight .highlight pre):hover {
+    border-left-color: #B91C4D !important;
+    box-shadow: 0 6px 20px rgba(139, 21, 56, 0.12), 
+                0 2px 6px rgba(139, 21, 56, 0.16) !important;
+  }
+  
+
+  
+  /* Code block styling fallback - but NOT for Jupyter notebooks */
+  .post-content pre:not(.jp-InputArea pre):not(.input_area pre):not(.jp-OutputArea pre):not(.output_area pre):not(.jupyter pre):not(.notebook pre):not(.nbinput pre):not(.nboutput pre):not(.highlight-ipynb pre):not(.CodeMirror pre):not(.cm-s-jupyter pre),
+  .content-wrapper pre:not(.jp-InputArea pre):not(.input_area pre):not(.jp-OutputArea pre):not(.output_area pre):not(.jupyter pre):not(.notebook pre):not(.nbinput pre):not(.nboutput pre):not(.highlight-ipynb pre):not(.CodeMirror pre):not(.cm-s-jupyter pre) {
+    background: linear-gradient(135deg, #FEFCFD 0%, #FDF5F7 100%) !important;
+    border: 1px solid #E8D4D8 !important;
+    border-left: 4px solid #8B1538 !important;
+    border-radius: 8px !important;
+    padding: 1.5rem 1.75rem !important;
+    margin: 2rem 0 !important;
+    overflow-x: auto !important;
+    box-shadow: 0 4px 12px rgba(139, 21, 56, 0.08), 
+                0 1px 3px rgba(139, 21, 56, 0.12) !important;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+  
+  .post-content pre:not(.jp-InputArea pre):not(.input_area pre):not(.jp-OutputArea pre):not(.output_area pre):not(.jupyter pre):not(.notebook pre):not(.nbinput pre):not(.nboutput pre):not(.highlight-ipynb pre):not(.CodeMirror pre):not(.cm-s-jupyter pre):hover,
+  .content-wrapper pre:not(.jp-InputArea pre):not(.input_area pre):not(.jp-OutputArea pre):not(.output_area pre):not(.jupyter pre):not(.notebook pre):not(.nbinput pre):not(.nboutput pre):not(.highlight-ipynb pre):not(.CodeMirror pre):not(.cm-s-jupyter pre):hover {
     border-left-color: #B91C4D !important;
     box-shadow: 0 6px 20px rgba(139, 21, 56, 0.12), 
                 0 2px 6px rgba(139, 21, 56, 0.16) !important;
@@ -236,7 +418,7 @@ window.MathJax = {
   }
   
   /* Copy button for code blocks */
-  pre::before {
+  pre[data-language]::before {
     content: attr(data-language);
     position: absolute;
     top: 0.75rem;
@@ -573,8 +755,172 @@ window.MathJax = {
     border-radius: 4px;
   }
   
+  /* Jupyter Notebook Override Protection - CRITICAL */
+  /* Protect site header and navigation from notebook CSS interference */
+  .site-header,
+  .site-header *,
+  .site-nav,
+  .site-nav *,
+  .site-title,
+  .page-link,
+  .trigger,
+  .menu-icon {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  }
+  
+  /* Force site title styling regardless of notebook CSS */
+  .site-header .site-title,
+  body .site-header .site-title,
+  html .site-header .site-title {
+    font-family: 'Manrope', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+    color: #8B1538 !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Force navigation link styling regardless of notebook CSS */
+  .site-nav .page-link,
+  body .site-nav .page-link,
+  html .site-nav .page-link {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    color: #5A4A4E !important;
+    letter-spacing: 0.01em !important;
+    line-height: 1.5 !important;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  
+  /* Force navigation hover states */
+  .site-nav .page-link:hover,
+  body .site-nav .page-link:hover,
+  html .site-nav .page-link:hover {
+    color: #8B1538 !important;
+    transform: translateY(-1px) !important;
+  }
+  
+  /* Force navigation current page styling */
+  .site-nav .page-link[aria-current="page"],
+  body .site-nav .page-link[aria-current="page"],
+  html .site-nav .page-link[aria-current="page"] {
+    color: #8B1538 !important;
+    font-weight: 600 !important;
+  }
+  
+  /* Force site header wrapper styling */
+  .site-header .wrapper,
+  body .site-header .wrapper,
+  html .site-header .wrapper {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0.5rem 1.5rem !important;
+  }
+  
+  /* Force trigger (navigation container) styling */
+  .site-nav .trigger,
+  body .site-nav .trigger,
+  html .site-nav .trigger {
+    display: flex !important;
+    gap: 1.5rem !important;
+    align-items: center !important;
+  }
+  
+  /* Prevent notebook CSS from affecting header positioning */
+  .site-header,
+  body .site-header,
+  html .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    background: rgba(254, 252, 253, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid #E8D4D8 !important;
+    box-shadow: 0 1px 3px rgba(139, 21, 56, 0.1) !important;
+  }
+  
+  /* Mobile menu icon protection */
+  .menu-icon,
+  body .menu-icon,
+  html .menu-icon {
+    width: 36px !important;
+    height: 36px !important;
+    cursor: pointer !important;
+  }
+  
+  .menu-icon span,
+  body .menu-icon span,
+  html .menu-icon span {
+    display: block !important;
+    width: 24px !important;
+    height: 2px !important;
+    background: #8B1538 !important;
+    margin: 3px 0 !important;
+    transition: all 0.3s ease !important;
+  }
+  
   /* Responsive Typography */
   @media (max-width: 768px) {
+    /* Mobile navigation protection from notebook CSS */
+    .site-header .wrapper,
+    body .site-header .wrapper,
+    html .site-header .wrapper {
+      padding: 0.4rem 1rem !important;
+    }
+    
+    .site-title,
+    body .site-title,
+    html .site-title {
+      font-size: 1.25rem !important;
+    }
+    
+    .menu-icon,
+    body .menu-icon,
+    html .menu-icon {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+    
+    .trigger:not(.mobile-menu-open),
+    body .trigger:not(.mobile-menu-open),
+    html .trigger:not(.mobile-menu-open) {
+      display: none !important;
+    }
+    
+    .trigger.mobile-menu-open,
+    body .trigger.mobile-menu-open,
+    html .trigger.mobile-menu-open {
+      display: flex !important;
+      position: absolute !important;
+      top: 100% !important;
+      right: 0 !important;
+      flex-direction: column !important;
+      gap: 0.5rem !important;
+      background: rgba(254, 252, 253, 0.98) !important;
+      padding: 1rem !important;
+      border-radius: 4px !important;
+      box-shadow: 0 4px 12px rgba(139, 21, 56, 0.2) !important;
+      backdrop-filter: blur(10px) !important;
+      border: 1px solid #E8D4D8 !important;
+      min-width: 200px !important;
+      z-index: 1000 !important;
+    }
+    
+    .trigger.mobile-menu-open .page-link,
+    body .trigger.mobile-menu-open .page-link,
+    html .trigger.mobile-menu-open .page-link {
+      margin: 0.25rem 0 !important;
+      padding: 0.75rem 1rem !important;
+      border-radius: 4px !important;
+      display: block !important;
+      text-align: center !important;
+    }
+    
     body {
       font-size: 0.95rem;
       line-height: 1.6;
@@ -801,6 +1147,14 @@ window.MathJax = {
     
     // Enhanced code block copy functionality
     document.querySelectorAll('pre').forEach(pre => {
+      // Skip ALL Jupyter notebook areas to avoid interfering with notebook display
+      if (pre.closest('.jp-Notebook, .jupyter-notebook, .jp-InputArea, .input_area, .jp-OutputArea, .output_area, .output_subarea, .output_text, .output_stream, .output_stdout, .output_stderr, .output_error, .nbinput, .nboutput, .CodeMirror, .cm-s-jupyter, .highlight-ipynb') ||
+          pre.className.match(/jp-|input|output|error|stderr|stdout|jupyter|notebook|nbinput|nboutput|CodeMirror|cm-s-jupyter|highlight-ipynb/) ||
+          pre.parentElement.className.match(/jp-|input|output|error|stderr|stdout|jupyter|notebook|nbinput|nboutput|CodeMirror|cm-s-jupyter|highlight-ipynb/) ||
+          pre.closest('article[data-mime-type*="jupyter"]')) {
+        return;
+      }
+      
       // Create copy button
       const copyButton = document.createElement('button');
       copyButton.className = 'copy-code-btn';

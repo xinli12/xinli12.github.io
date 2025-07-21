@@ -145,6 +145,7 @@ layout: page
 
   <div class="blog-posts" style="display: grid; gap: 1rem; max-width: 1000px; margin: 0 auto;">
     {% for post in site.posts limit:3 %}
+    {% unless post.path contains '.ipynb' and post.url contains '.ipynb.html' %}
     <article class="hover-card no-animation" style="padding: 1.5rem; border-left: 3px solid #8B1538; background: #FDF5F7;">
       <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
         <span class="tag" style="background: #8B1538; color: white;">
@@ -167,22 +168,16 @@ layout: page
         </a>
       </h3>
 
-      {% if post.excerpt %}
-      <p style="color: #5A4A4E; line-height: 1.5; font-size: 0.9rem; margin: 0 0 1rem 0;"
-         {% if post.multilingual %}class="dynamic-post-excerpt-home" data-post-languages="{{ post.languages | jsonify | escape }}" data-default-excerpt="{{ post.excerpt | strip_html | escape }}"{% endif %}>
-        {{ post.excerpt | strip_html | truncatewords: 25 }}...
-      </p>
-      {% endif %}
-
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <span style="color: #8B7B7E; font-size: 0.8rem;">
-          {{ post.content | number_of_words | divided_by: 200 }} min read
+          {% unless post.path contains '.ipynb' %}{{ post.content | number_of_words | divided_by: 200 }} min read{% endunless %}
         </span>
         <a href="{{ post.url }}" class="elegant-button elegant-button-small">
           Read more →
         </a>
       </div>
     </article>
+    {% endunless %}
     {% endfor %}
   </div>
 

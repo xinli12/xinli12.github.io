@@ -71,6 +71,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-paginate
+  - jekyll-jupyter-notebook
 
 # Pagination settings
 paginate: 5
@@ -161,3 +162,4 @@ exclude:
   - LICENSE.md
   - "*.gem"
   - "*.gemspec"
+  - "**/*.ipynb.html"
