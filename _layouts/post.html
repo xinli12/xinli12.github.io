@@ -76,19 +76,18 @@ layout: default
         </div>
         {% endif %}
         
-        <!-- Reading Time -->
-        {% if page.path contains '.ipynb' %}{% else %}
+        <!-- Reading Time & Word Count -->
+        {% unless page.path contains '.ipynb' %}
         <div style="display: flex; align-items: center; gap: 0.5rem;">
           <span>📖</span>
           <span>{{ content | number_of_words | divided_by: 200 }} min read</span>
         </div>
-        {% endif %}
         
-        <!-- Word Count -->
         <div style="display: flex; align-items: center; gap: 0.5rem;">
           <span>📊</span>
           <span>{{ content | number_of_words }} words</span>
         </div>
+        {% endunless %}
         
         <!-- Language Switcher (if multilingual) -->
         {% if page.multilingual and page.languages.size > 1 %}
