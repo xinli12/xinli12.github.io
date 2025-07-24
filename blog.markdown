@@ -65,9 +65,6 @@ permalink: /blog/
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
         <div style="color: #8B7B7E; font-size: 0.85rem; display: flex; align-items: center; gap: 1rem;">
           {% unless post.path contains '.ipynb' %}<span>{{ post.content | number_of_words | divided_by: 200 }} min read</span>{% endunless %}
-          {% if post.comments != false %}
-          <span>💬 Comments welcome</span>
-          {% endif %}
         </div>
         
         <a href="{{ post.url }}" class="elegant-button elegant-button-small">

@@ -66,6 +66,11 @@ google_fonts:
 markdown: kramdown
 highlighter: rouge
 theme: minima
+
+# Sass configuration
+sass:
+  quiet_deps: true
+  verbose: false
 plugins:
   - jekyll-feed
   - jekyll-sitemap

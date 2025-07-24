@@ -8,7 +8,7 @@ layout: page
   </h1>
   <div style="width: 60px; height: 2px; background: linear-gradient(90deg, #8B1538, #B91C4D); margin: 1rem auto;"></div>
   <p class="lead" style="font-size: 1.25rem; color: #5A4A4E; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-    Welcome to my personal page! I'm a physics graduate with a passion for data-driven exploration.
+    Welcome to my personal page! I'm a physics graduate with a passion for building models and data-driven exploration.
   </p>
   <p style="font-size: 1rem; color: #2D1B20; max-width: 900px; margin: 0 auto; line-height: 1.6;">
     I'm curious about what our universe holds and what the future brings, and I'm passionate about building models—particularly those interpretable by humans—to <strong style="color: #8B1538;">explore, understand, and predict</strong> the phenomena around us.
@@ -32,7 +32,7 @@ layout: page
     <div style="width: 1px; background: #E8D4D8; margin: 0.5rem 0;"></div>
     <div class="hover-card" style="text-align: center; padding: 1rem;">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔭</div>
-      <p style="margin: 0; font-weight: 500; font-size: 0.95rem; color: #5A4A4E;">I simulate the universe (in Python).</p>
+      <p style="margin: 0; font-weight: 500; font-size: 0.95rem; color: #5A4A4E;">I decode the universe’s signals — mostly in Python.</p>
     </div>
   </div>
 
@@ -128,129 +128,9 @@ layout: page
   </div>
 </div>
 
-<div style="display: flex; justify-content: center; align-items: center; margin: 2.5rem 0;">
-  <div style="width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 6px solid #B91C4D; margin-right: 1rem;"></div>
-  <div style="width: 80px; height: 1px; background: linear-gradient(90deg, #8B1538, #B91C4D);"></div>
-  <div style="width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 6px solid #8B1538; margin-left: 1rem;"></div>
-</div>
 
-<div class="blog-section animate-on-scroll" style="margin: 2.5rem 0;">
-  <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #8B1538; text-align: center; border-bottom: 2px solid #F8E8EC; padding-bottom: 0.5rem;">📝 Recent Blog Posts</h2>
-  
-  <div style="text-align: center; margin-bottom: 2rem;">
-    <p style="font-size: 1rem; color: #5A4A4E;">
-      Here are some of my latest thoughts and discoveries.
-    </p>
-  </div>
 
-  <div class="blog-posts" style="display: grid; gap: 1rem; max-width: 1000px; margin: 0 auto;">
-    {% for post in site.posts limit:3 %}
-    {% unless post.path contains '.ipynb' and post.url contains '.ipynb.html' %}
-    <article class="hover-card no-animation" style="padding: 1.5rem; border-left: 3px solid #8B1538; background: #FDF5F7;">
-      <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
-        <span class="tag" style="background: #8B1538; color: white;">
-          {{ post.date | date: "%B %d, %Y" }}
-        </span>
-        {% for category in post.categories limit:2 %}
-        <span class="tag">{{ category | replace: '-', ' ' | capitalize }}</span>
-        {% endfor %}
-        {% if post.multilingual and post.languages.size > 1 %}
-        <span class="tag" style="background: #F8E8EC; color: #8B1538;">
-          🌐 {{ post.languages.size }} langs
-        </span>
-        {% endif %}
-      </div>
 
-      <h3 style="margin: 0 0 0.75rem 0; font-size: 1.25rem; font-weight: 600; line-height: 1.3;"
-          {% if post.multilingual %}class="dynamic-post-title-home" data-post-languages="{{ post.languages | jsonify | escape }}" data-default-title="{{ post.title | escape }}"{% endif %}>
-        <a href="{{ post.url }}" style="text-decoration: none; color: #8B1538; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
-          {{ post.title }}
-        </a>
-      </h3>
-
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span style="color: #8B7B7E; font-size: 0.8rem;">
-          {% unless post.path contains '.ipynb' %}{{ post.content | number_of_words | divided_by: 200 }} min read{% endunless %}
-        </span>
-        <a href="{{ post.url }}" class="elegant-button elegant-button-small">
-          Read more →
-        </a>
-      </div>
-    </article>
-    {% endunless %}
-    {% endfor %}
-  </div>
-
-  <div style="text-align: center; margin-top: 2rem;">
-    <a href="/blog/" class="elegant-button">
-      View All Posts
-      <span style="font-size: 1.1rem;">→</span>
-    </a>
-  </div>
-</div>
-
-<!-- Multilingual Homepage Support Script -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Always default to English first, then check saved preference
-  let preferredLang = 'en';
-  const savedLang = localStorage.getItem('preferred-lang');
-  if (savedLang) {
-    preferredLang = savedLang;
-  }
-  
-  // Update multilingual post previews on homepage
-  const dynamicTitlesHome = document.querySelectorAll('.dynamic-post-title-home');
-  const dynamicExcerptsHome = document.querySelectorAll('.dynamic-post-excerpt-home');
-  
-  dynamicTitlesHome.forEach(titleElement => {
-    try {
-      const languagesAttr = titleElement.getAttribute('data-post-languages');
-      if (!languagesAttr) return;
-      
-      const languages = JSON.parse(languagesAttr);
-      const defaultTitle = titleElement.getAttribute('data-default-title');
-      
-      // Find the preferred language version, defaulting to English
-      let langVersion = languages.find(lang => lang.code === preferredLang);
-      if (!langVersion && preferredLang !== 'en') {
-        langVersion = languages.find(lang => lang.code === 'en');
-      }
-      
-      if (langVersion && langVersion.title) {
-        const linkElement = titleElement.querySelector('a');
-        if (linkElement) {
-          linkElement.textContent = langVersion.title;
-        }
-      }
-    } catch (e) {
-      console.log('Error parsing language data for title on homepage:', e);
-    }
-  });
-  
-  dynamicExcerptsHome.forEach(excerptElement => {
-    try {
-      const languagesAttr = excerptElement.getAttribute('data-post-languages');
-      if (!languagesAttr) return;
-      
-      const languages = JSON.parse(languagesAttr);
-      const defaultExcerpt = excerptElement.getAttribute('data-default-excerpt');
-      
-      // Find the preferred language version, defaulting to English
-      let langVersion = languages.find(lang => lang.code === preferredLang);
-      if (!langVersion && preferredLang !== 'en') {
-        langVersion = languages.find(lang => lang.code === 'en');
-      }
-      
-      if (langVersion && langVersion.excerpt) {
-        excerptElement.textContent = langVersion.excerpt + '...';
-      }
-    } catch (e) {
-      console.log('Error parsing language data for excerpt on homepage:', e);
-    }
-  });
-});
-</script>
 
 <style>
 /* Remove hover transform for focus list items */
@@ -275,16 +155,6 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 /* Optimized animations */
-.blog-posts article:hover {
-  border-left-color: #B91C4D;
-  transform: translateY(-2px); /* Reduced from -3px for smoother feel */
-}
-
-.blog-posts article:hover h3 a {
-  color: #B91C4D;
-  transform: translateY(-0.5px); /* Reduced from -1px */
-}
-
 .contact-section .hover-card:hover {
   border-left-color: #B91C4D;
   transform: translateY(-2px); /* Reduced from -3px */
@@ -319,9 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
     font-size: 1.5rem !important;
   }
   
-  .blog-posts article {
-    padding: 1.25rem;
-  }
+
   
   .contact-section .hover-card {
     padding: 1.25rem;
@@ -333,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   /* Reduce transforms on mobile for better performance */
-  .blog-posts article:hover,
   .contact-section .hover-card:hover {
     transform: translateY(-1px);
   }
