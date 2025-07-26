@@ -116,11 +116,11 @@ layout: page
   <div class="ask-me-about-section" style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: #FDF5F7; border-top: 1px solid #E8D4D8; border-bottom: 1px solid #E8D4D8; border-radius: 8px;">
     <h3 style="color: #8B1538; margin: 0 0 1rem 0; font-size: 1.2rem;">💬 Ask me about:</h3>
     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 1rem;">
-      <span class="tag">Physics</span>
-      <span class="tag">Machine Learning</span>
-      <span class="tag">Surviving a physics degree</span>
-      <span class="tag">When Nvidia might hit $6 trillion</span>
-      <span class="tag">Why my model refuses to converge at 2 a.m.</span>
+      <span class="smooth-tag">Physics</span>
+      <span class="smooth-tag">Machine Learning</span>
+      <span class="smooth-tag">Surviving a physics degree</span>
+      <span class="smooth-tag">When Nvidia might hit $6 trillion</span>
+      <span class="smooth-tag">Why my model refuses to converge at 2 a.m.</span>
     </div>
     <p style="margin: 0; font-size: 1rem; color: #2D1B20; font-weight: 500;">
       I'm happy to chat in both <strong>English</strong> and <strong>中文</strong>！
@@ -133,6 +133,33 @@ layout: page
 
 
 <style>
+/* Smooth tag styles for Ask me about section */
+.smooth-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  background: #F8E8EC;
+  color: #8B1538;
+  border: 1px solid #E8D4D8;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 1px 3px rgba(139, 21, 56, 0.05);
+  cursor: default;
+}
+
+.smooth-tag:hover {
+  background: #8B1538;
+  color: white;
+  border-color: #8B1538;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(139, 21, 56, 0.2);
+}
+
 /* Remove hover transform for focus list items */
 .focus-list-item {
   transition: all 0.2s ease;
